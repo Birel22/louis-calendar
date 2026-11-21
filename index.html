@@ -125,12 +125,19 @@
   .cal-all{display:flex;align-items:center;justify-content:center;gap:8px;margin:6px 0 8px;padding:11px 14px;border-radius:999px;background:var(--text);color:var(--bg);text-decoration:none;font:700 14px 'Barlow Condensed';letter-spacing:.1em;text-transform:uppercase}
   .cal-all svg{width:16px;height:16px}
   .inline-ic{width:13px;height:13px;vertical-align:-2px}
-  .sub-link{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--text);border:1px solid var(--line);border-radius:12px;padding:10px 14px;background:var(--panel);flex-basis:100%}
+  .sub-link{width:100%;text-align:left;font:inherit;cursor:pointer;display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--text);border:1px solid var(--line);border-radius:12px;padding:10px 14px;background:var(--panel);flex-basis:100%}
   .sub-link:hover{border-color:#4a4d56}
   .sub-link:focus-visible{outline:2px solid var(--lm);outline-offset:2px}
   .sub-link svg{width:20px;height:20px;flex:none}
   .sub-link b{display:block;font:700 15px 'Barlow Condensed';letter-spacing:.08em;text-transform:uppercase}
   .sub-link small{color:var(--muted);font-size:13px}
+  .tt-inc{color:var(--elms)}
+  .sub-opt{display:flex;align-items:center;justify-content:space-between;gap:12px;text-decoration:none;color:var(--text);border:1px solid var(--line);border-radius:12px;padding:12px 14px;margin-bottom:10px;background:var(--panel2)}
+  .sub-opt:hover{border-color:#4a4d56}
+  .sub-opt:focus-visible{outline:2px solid var(--lm);outline-offset:2px}
+  .sub-opt b{display:block;font:700 17px 'Barlow Condensed';letter-spacing:.06em;text-transform:uppercase}
+  .sub-opt small{color:var(--muted);font-size:13px}
+  .sub-opt span.arr{color:var(--muted);font-size:18px}
   .tt-note{font-size:12.5px;color:var(--dim);margin-bottom:12px;line-height:1.4}
   .tt-empty{color:var(--muted);padding:12px 0 16px;line-height:1.5}
   .tt-link{display:inline-block;margin-top:6px;color:var(--text);font-size:14px;text-underline-offset:3px}
@@ -252,7 +259,7 @@
       <span><i style="background:var(--lm)"></i><span data-i18n="lmFull">24 Hours of Le Mans</span></span>
     </div>
     <nav class="socials" data-i18n-aria="socials" aria-label="Social media"><a href="https://www.instagram.com/louisdeletraz/" target="_blank" rel="noopener" aria-label="Instagram" title="Instagram"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="17.3" cy="6.7" r="1.2" fill="currentColor"/></svg></a><a href="https://www.facebook.com/l.deletraz/" target="_blank" rel="noopener" aria-label="Facebook" title="Facebook"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M13.5 22v-8h2.7l.4-3.2h-3.1V8.8c0-.9.3-1.6 1.6-1.6h1.7V4.4c-.3 0-1.3-.1-2.5-.1-2.5 0-4.1 1.5-4.1 4.2v2.3H7.4V14h2.8v8z"/></svg></a><a href="https://x.com/LouisDeletraz" target="_blank" rel="noopener" aria-label="X" title="X"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M17.8 3h3.1l-6.8 7.8L22 21h-6.2l-4.9-6.4L5.3 21H2.2l7.3-8.3L2 3h6.4l4.4 5.8zm-1.1 16.2h1.7L7.4 4.7H5.6z"/></svg></a><a href="https://www.youtube.com/@LouisDel%C3%A9traz-h7t" target="_blank" rel="noopener" aria-label="YouTube" title="YouTube"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M21.6 7.2a2.6 2.6 0 0 0-1.8-1.8C18.2 5 12 5 12 5s-6.2 0-7.8.4A2.6 2.6 0 0 0 2.4 7.2C2 8.8 2 12 2 12s0 3.2.4 4.8a2.6 2.6 0 0 0 1.8 1.8c1.6.4 7.8.4 7.8.4s6.2 0 7.8-.4a2.6 2.6 0 0 0 1.8-1.8c.4-1.6.4-4.8.4-4.8s0-3.2-.4-4.8zM10 15V9l5.2 3z"/></svg></a><a href="https://louisdeletraz.com" target="_blank" rel="noopener" data-i18n-aria="website" aria-label="Website" title="Website"><svg viewBox="0 0 24 24" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 2.6 3.8 5.6 3.8 9s-1.3 6.4-3.8 9c-2.5-2.6-3.8-5.6-3.8-9S9.5 5.6 12 3z"/></g></svg></a></nav>
-    <a class="sub-link" href="webcal://birel22.github.io/louis-calendar/louis-2027.ics"><svg viewBox="0 0 24 24" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="2"><rect x="3.5" y="5" width="17" height="15.5" rx="2.5"/><path d="M3.5 10h17M8 3v4M16 3v4M12 13v5M9.5 15.5h5"/></g></svg><span><b data-i18n="subscribe">Subscribe to the calendar</b><small data-i18n="subNote">All race weekends and schedules, updated automatically on your phone.</small></span></a>
+    <button type="button" class="sub-link" id="sub-open"><svg viewBox="0 0 24 24" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="2"><rect x="3.5" y="5" width="17" height="15.5" rx="2.5"/><path d="M3.5 10h17M8 3v4M16 3v4M12 13v5M9.5 15.5h5"/></g></svg><span><b data-i18n="subscribe">Subscribe to the calendar</b><small data-i18n="subNote">All race weekends and schedules, updated automatically on your phone.</small></span></button>
     <div data-i18n="disclaimer">Dates are provisional and subject to change.</div>
   </footer>
 </div>
@@ -266,13 +273,13 @@ const I18N = {
       disclaimer:"Dates are provisional and subject to change.", close:"Close", next:"Next", raceLength:"Race length", maps:"View on Google Maps",
       schedule:"Schedule", watch:"Where to watch", nextRace:"Next race", now:"Right now", racing:"Racing 🏁", season:"Season 2027", over:"Over — thanks for the support!",
       days:"days", hours:"hours", min:"min", sec:"sec", notYet:"Not published yet.<br>Schedules usually come out a few weeks before the race.",
-      official:"View on the official website ↗", localTrack:"Local track time", partialLM:"practice, qualifying and Hyperpole not published yet", locale:"en-GB", timeMode:"Time zone", trackTime:"Track time", myTime:"My time", yourTime:"Your local time", addOne:"Add to my calendar", addAll:"Add all to my calendar", calNote:"Saved in your phone’s calendar in your own time zone, with an alert 15 minutes before each session.", selectAll:"Select all", selectNone:"Clear selection", pickNone:"Select sessions to add", addOneSel:"Add 1 session to my calendar", addN:"Add {n} sessions to my calendar", subscribe:"Subscribe to the calendar", subNote:"All race weekends and schedules, updated automatically on your phone."},
+      official:"View on the official website ↗", localTrack:"Local track time", partialLM:"practice, qualifying and Hyperpole not published yet", locale:"en-GB", timeMode:"Time zone", trackTime:"Track time", myTime:"My time", yourTime:"Your local time", addOne:"Add to my calendar", addAll:"Add all to my calendar", calNote:"Saved in your phone’s calendar in your own time zone, with an alert 15 minutes before each session.", selectAll:"Select all", selectNone:"Clear selection", pickNone:"Select sessions to add", addOneSel:"Add 1 session to my calendar", addN:"Add {n} sessions to my calendar", subscribe:"Subscribe to the calendar", incomplete:"Incomplete schedule — not published yet:", cat_fp:"free practice", cat_q:"qualifying", cat_r:"race", subTitle:"Subscribe to Louis’s calendar", subIntro:"Pick what you want on your phone. Race weekends are always included, and new schedules are added automatically.", sub_all:"Everything", sub_all_d:"Free practice, qualifying and races", sub_qr:"Qualifying & races", sub_qr_d:"No free practice", sub_r:"Races only", sub_r_d:"Just the race starts", subNote:"All race weekends and schedules, updated automatically on your phone."},
   fr:{docTitle:"Louis calendrier 2027", eyebrow:"Louis Delétraz · Saison 2027", title:"Louis <em>calendrier 2027</em>", photoAlt:"Louis Delétraz à côté de sa Cadillac Hypercar",
       socials:"Réseaux sociaux", website:"Site web", partners:"Partenaires", filterBy:"Filtrer par championnat", all:"Tout", lmFull:"24 Heures du Mans",
       disclaimer:"Dates indicatives, susceptibles de changer.", close:"Fermer", next:"Prochaine", raceLength:"Durée de course", maps:"Voir sur Google Maps",
       schedule:"Horaires", watch:"Où regarder", nextRace:"Prochaine course", now:"En ce moment", racing:"En course 🏁", season:"Saison 2027", over:"Terminée — merci pour le soutien !",
       days:"jours", hours:"heures", min:"min", sec:"sec", notYet:"Pas encore publié.<br>Les horaires sortent en général quelques semaines avant la course.",
-      official:"Voir sur le site officiel ↗", localTrack:"Heure locale du circuit", partialLM:"essais, qualifs et Hyperpole pas encore publiés", locale:"fr-FR", timeMode:"Fuseau horaire", trackTime:"Heure du circuit", myTime:"Mon heure", yourTime:"Ton heure locale", addOne:"Ajouter à mon calendrier", addAll:"Tout ajouter à mon calendrier", calNote:"Enregistré dans le calendrier de ton téléphone à ton heure locale, avec une alerte 15 minutes avant chaque session.", selectAll:"Tout sélectionner", selectNone:"Tout désélectionner", pickNone:"Sélectionne les sessions à ajouter", addOneSel:"Ajouter 1 session à mon calendrier", addN:"Ajouter {n} sessions à mon calendrier", subscribe:"S’abonner au calendrier", subNote:"Tous les week-ends de course et les horaires, mis à jour automatiquement sur ton téléphone."},
+      official:"Voir sur le site officiel ↗", localTrack:"Heure locale du circuit", partialLM:"essais, qualifs et Hyperpole pas encore publiés", locale:"fr-FR", timeMode:"Fuseau horaire", trackTime:"Heure du circuit", myTime:"Mon heure", yourTime:"Ton heure locale", addOne:"Ajouter à mon calendrier", addAll:"Tout ajouter à mon calendrier", calNote:"Enregistré dans le calendrier de ton téléphone à ton heure locale, avec une alerte 15 minutes avant chaque session.", selectAll:"Tout sélectionner", selectNone:"Tout désélectionner", pickNone:"Sélectionne les sessions à ajouter", addOneSel:"Ajouter 1 session à mon calendrier", addN:"Ajouter {n} sessions à mon calendrier", subscribe:"S’abonner au calendrier", incomplete:"Horaire incomplet — pas encore publié :", cat_fp:"essais libres", cat_q:"qualifs", cat_r:"course", subTitle:"S’abonner au calendrier de Louis", subIntro:"Choisis ce que tu veux dans ton téléphone. Les week-ends de course sont toujours inclus, et les nouveaux horaires s’ajoutent automatiquement.", sub_all:"Tout", sub_all_d:"Essais libres, qualifs et courses", sub_qr:"Qualifs & courses", sub_qr_d:"Sans les essais libres", sub_r:"Courses seulement", sub_r_d:"Juste les départs des courses", subNote:"Tous les week-ends de course et les horaires, mis à jour automatiquement sur ton téléphone."},
 };
 const MONTHS = {en:["January","February","March","April","May","June","July","August","September","October","November","December"],
                 fr:["Janvier","Février","Mars","Avril","Mai","Juin","Juillet","Août","Septembre","Octobre","Novembre","Décembre"]};
@@ -328,6 +335,7 @@ const TIMETABLES = {
  "jerez": {
   "src": "https://www.asianlemansseries.com/en/race/4-hours-of-jerez-by-alms-2027",
   "tz": "Europe/Madrid",
+  "missing": [],
   "title": "ALMS Jerez",
   "loc": "Circuito de Jerez – Ángel Nieto, Jerez de la Frontera, Spain",
   "sessions": [
@@ -416,6 +424,7 @@ const TIMETABLES = {
  "portimao-alms": {
   "src": "https://www.asianlemansseries.com/en/race/4-hours-of-portimao-by-alms-2027",
   "tz": "Europe/Lisbon",
+  "missing": [],
   "title": "ALMS Portimão",
   "loc": "Autódromo Internacional do Algarve, Portimão, Portugal",
   "sessions": [
@@ -504,7 +513,10 @@ const TIMETABLES = {
  "lemans": {
   "src": "https://www.24h-lemans.com/en/program",
   "tz": "Europe/Paris",
-  "partial": "partialLM",
+  "missing": [
+   "fp",
+   "q"
+  ],
   "title": "24h Le Mans",
   "loc": "Circuit de la Sarthe, Le Mans, France",
   "sessions": [
@@ -581,7 +593,7 @@ function fillTT(i){
     const zone = ttMode === "track" ? t.tz : viewerTz;
     const first = new Date(t.sessions[0].utc);
     html += `<div class="tt-mode" role="group" aria-label="${T("timeMode")}"><button data-mode="mine" aria-pressed="${ttMode==="mine"}">${T("myTime")}</button><button data-mode="track" aria-pressed="${ttMode==="track"}">${T("trackTime")}</button></div>`;
-    html += `<p class="tt-tz">${ttMode==="track" ? T("localTrack") + " · " + offsetLabel(first, t.tz) : T("yourTime") + " · " + esc(viewerTz.replace(/_/g," ")) + " (" + offsetLabel(first, viewerTz) + ")"}${t.partial ? "<br>" + T(t.partial) : ""}</p>`;
+    html += `<p class="tt-tz">${ttMode==="track" ? T("localTrack") + " · " + offsetLabel(first, t.tz) : T("yourTime") + " · " + esc(viewerTz.replace(/_/g," ")) + " (" + offsetLabel(first, viewerTz) + ")"}${t.missing.length ? `<br><span class="tt-inc">${T("incomplete")} ${t.missing.map(c => T("cat_"+c)).join(", ")}</span>` : ""}</p>`;
     const days = [];
     t.sessions.forEach((s, k) => {
       const dt = new Date(s.utc);
@@ -633,6 +645,12 @@ document.getElementById("tt-body").addEventListener("click", e => {
 });
 function openTT(i){ ttOpenIdx = i; fillTT(i); ttLastFocus = document.activeElement; document.getElementById("tt").hidden = false; document.getElementById("tt-close").focus(); }
 function closeTT(){ ttOpenIdx = null; document.getElementById("tt").hidden = true; if (ttLastFocus) ttLastFocus.focus(); }
+const SUBS = [["sub_all","sub_all_d","louis-2027.ics"],["sub_qr","sub_qr_d","louis-2027-quali-race.ics"],["sub_r","sub_r_d","louis-2027-races.ics"]];
+function fillSub(){
+  document.getElementById("tt-body").innerHTML = `<div class="tt-head lm"><h3 id="tt-title">${T("subTitle")}</h3></div><p class="tt-empty" style="padding-top:0">${T("subIntro")}</p>`
+    + SUBS.map(([t,dsc,f]) => `<a class="sub-opt" href="webcal://birel22.github.io/louis-calendar/${f}"><span><b>${T(t)}</b><small>${T(dsc)}</small></span><span class="arr" aria-hidden="true">›</span></a>`).join("");
+}
+document.getElementById("sub-open").addEventListener("click", () => { ttOpenIdx = "sub"; fillSub(); ttLastFocus = document.activeElement; document.getElementById("tt").hidden = false; document.getElementById("tt-close").focus(); });
 document.getElementById("tt").addEventListener("click", e => { if (e.target.id === "tt") closeTT(); });
 document.getElementById("tt-close").addEventListener("click", closeTT);
 document.addEventListener("keydown", e => { if (e.key === "Escape" && !document.getElementById("tt").hidden) closeTT(); });
@@ -683,7 +701,7 @@ function applyLang(lang){
   document.querySelectorAll("[data-i18n-alt]").forEach(el => el.alt = T(el.dataset.i18nAlt));
   document.querySelectorAll(".lang button").forEach(b => b.setAttribute("aria-pressed", b.dataset.lang===lang ? "true" : "false"));
   render(); cdKey = null; tick();
-  if (ttOpenIdx !== null) fillTT(ttOpenIdx);
+  if (ttOpenIdx === "sub") fillSub(); else if (ttOpenIdx !== null) fillTT(ttOpenIdx);
 }
 document.querySelectorAll(".lang button").forEach(b => b.addEventListener("click", () => {
   try { localStorage.setItem("lang", b.dataset.lang); } catch(e){}
