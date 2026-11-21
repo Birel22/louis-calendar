@@ -42,6 +42,9 @@
   .lang button{font:700 13px 'Barlow Condensed';letter-spacing:.12em;color:var(--muted);background:none;border:0;border-radius:999px;padding:6px 12px;cursor:pointer}
   .lang button[aria-pressed="true"]{background:var(--text);color:var(--bg)}
   .lang button:focus-visible{outline:2px solid var(--lm);outline-offset:2px}
+  .page-cue{position:fixed;left:50%;bottom:calc(14px + env(safe-area-inset-bottom));transform:translateX(-50%) translateY(calc((1 - var(--pc,1)) * 12px));opacity:var(--pc,1);display:flex;align-items:center;gap:6px;font:600 13px 'Barlow',sans-serif;color:var(--text);background:rgba(28,31,37,.9);border:1px solid #3a3d45;border-radius:999px;padding:7px 14px 7px 11px;pointer-events:none;z-index:40;backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);box-shadow:0 6px 20px rgba(0,0,0,.4);transition:opacity .12s linear,transform .12s linear}
+  .page-cue svg{width:14px;height:14px;animation:cue-bob 1.6s ease-in-out infinite}
+  .page-cue.gone{display:none}
   .chip-lm{height:14px;width:auto;display:block}
   .chip[aria-pressed="true"] .chip-lm{filter:invert(1)}
   .chip .ic{font-size:16px;line-height:1}
@@ -220,19 +223,25 @@
 
   [hidden]{display:none!important}
 
+  @media (max-width:620px) and (max-height:620px){ .hero{min-height:214px !important} .hero h1{font-size:32px !important} .partners{padding:8px 12px !important} }
   @media (max-width:620px){
-    .wrap{padding:28px 16px 48px}
+    .wrap{padding:12px 12px 48px}
     .stats{grid-template-columns:repeat(2,1fr)}
-    .hero{min-height:520px;align-items:flex-end}
-    .hero .photo{object-position:72% 0%;height:75%}
-    .hero::after{background:linear-gradient(180deg,rgba(13,14,17,.75) 0%,rgba(13,14,17,0) 22%),linear-gradient(0deg,rgba(13,14,17,.95) 0%,rgba(13,14,17,.6) 40%,rgba(13,14,17,0) 70%)}
-    .hero-text{padding:20px}
-    .logo{top:18px;left:20px;width:110px}
-    .hero .socials{gap:8px;margin-top:12px}
-    .socials a{width:30px;height:30px}
+    .hero{min-height:268px;align-items:flex-end;margin-bottom:10px;border-radius:14px}
+    .hero .photo{object-position:70% 28%;height:100%}
+    .hero::after{background:linear-gradient(180deg,rgba(13,14,17,.7) 0%,rgba(13,14,17,0) 30%),linear-gradient(0deg,rgba(13,14,17,.95) 0%,rgba(13,14,17,.55) 45%,rgba(13,14,17,0) 75%)}
+    .hero h1{font-size:38px;margin:2px 0 0}
+    .eyebrow{font-size:12px}
+    .lang{top:12px;right:12px}
+    .lang button{padding:5px 10px}
+    .hero-text{padding:14px 16px}
+    .logo{top:14px;left:16px;width:92px}
+    .hero .socials{gap:6px;margin-top:8px}
+    .socials a{width:28px;height:28px}
     .socials svg{width:16px;height:16px}
     .partners span{display:none}
-    .partners .p-cad{height:30px} .partners .p-cnx{height:16px} .partners .p-ao{height:26px}
+    .partners{padding:10px 12px}
+    .partners .p-cad{height:26px} .partners .p-cnx{height:14px} .partners .p-ao{height:22px}
     .month{grid-template-columns:1fr;gap:8px}
     .month h2{position:static;padding-top:6px}
     .ev{grid-template-columns:70px 1fr;gap:12px}
@@ -252,7 +261,12 @@
     .cd-btns{width:100%}
     .watch-alt{text-align:center}
     .cd-units div{flex:1;min-width:0}
-    .cd-units b{font-size:26px}
+    .cd-units b{font-size:22px}
+    .countdown{margin-top:10px;padding:14px 14px;gap:12px}
+    .cd-label b{font-size:22px}
+    .cd-units div{padding:6px 4px}
+    .cd-units small{font-size:10px}
+    .watch{padding:8px 10px}
   }
 </style>
 </head>
@@ -303,6 +317,7 @@
   </footer>
 </div>
 
+<div class="page-cue" id="page-cue" aria-hidden="true"><svg viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" d="M6 9l6 6 6-6"/></svg><span data-i18n="moreRaces">More races</span></div>
 <div id="tt" hidden><div class="tt-modal" role="dialog" aria-modal="true" aria-labelledby="tt-title"><div class="tt-hd"><div id="tt-hdc"></div><button id="tt-close" data-i18n-aria="close" aria-label="Close">×</button></div><div id="tt-body"></div><div id="tt-ft"></div><div class="scroll-fade" aria-hidden="true"></div><div class="scroll-cue" id="scroll-cue" aria-hidden="true"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" d="M6 9l6 6 6-6"/></svg><span data-i18n="more">More</span></div></div></div>
 <script>
 // ===== Langue / Language =====
@@ -312,13 +327,13 @@ const I18N = {
       disclaimer:"Dates are provisional and subject to change.", close:"Close", next:"Next", raceLength:"Race length", maps:"View on Google Maps",
       schedule:"Schedule", watch:"Where to watch", nextRace:"Next race", now:"Right now", racing:"Racing 🏁", season:"Season 2027", over:"Over — thanks for the support!",
       days:"days", hours:"hours", min:"min", sec:"sec", notYet:"Not published yet.<br>Schedules usually come out a few weeks before the race.",
-      official:"View on the official website ↗", localTrack:"Local track time", partialLM:"practice, qualifying and Hyperpole not published yet", locale:"en-GB", timeMode:"Time zone", trackTime:"Track time", myTime:"My time", yourTime:"Your local time", addOne:"Add to my calendar", addAll:"Add all to my calendar", calNote:"Saved in your phone’s calendar in your own time zone, with an alert 15 minutes before each session.", selectAll:"Select all", more:"More", cancel:"Cancel", calHint:"Tap the calendar icon next to a session to add it — you can then select several at once. Saved in your own time zone, with an alert 15 minutes before.", selectNone:"Clear selection", pickNone:"Select sessions to add", addOneSel:"Add 1 session to my calendar", addN:"Add {n} sessions to my calendar", subscribe:"Subscribe to the calendar", incomplete:"Incomplete schedule — not published yet:", cat_fp:"free practice", cat_q:"qualifying", cat_r:"race", subTitle:"Subscribe to Louis’s calendar", subIntro:"Pick what you want on your phone. Race weekends are always included, and new schedules are added automatically.", sub_all:"Everything", sub_all_d:"Free practice, qualifying and races", sub_qr:"Qualifying & races", sub_qr_d:"No free practice", sub_r:"Races only", sub_r_d:"Just the race starts", subNote:"All race weekends and schedules, updated automatically on your phone."},
+      official:"View on the official website ↗", localTrack:"Local track time", partialLM:"practice, qualifying and Hyperpole not published yet", locale:"en-GB", timeMode:"Time zone", trackTime:"Track time", myTime:"My time", yourTime:"Your local time", addOne:"Add to my calendar", addAll:"Add all to my calendar", calNote:"Saved in your phone’s calendar in your own time zone, with an alert 15 minutes before each session.", selectAll:"Select all", more:"More", moreRaces:"More races", cancel:"Cancel", calHint:"Tap the calendar icon next to a session to add it — you can then select several at once. Saved in your own time zone, with an alert 15 minutes before.", selectNone:"Clear selection", pickNone:"Select sessions to add", addOneSel:"Add 1 session to my calendar", addN:"Add {n} sessions to my calendar", subscribe:"Subscribe to the calendar", incomplete:"Incomplete schedule — not published yet:", cat_fp:"free practice", cat_q:"qualifying", cat_r:"race", subTitle:"Subscribe to Louis’s calendar", subIntro:"Pick what you want on your phone. Race weekends are always included, and new schedules are added automatically.", sub_all:"Everything", sub_all_d:"Free practice, qualifying and races", sub_qr:"Qualifying & races", sub_qr_d:"No free practice", sub_r:"Races only", sub_r_d:"Just the race starts", subNote:"All race weekends and schedules, updated automatically on your phone."},
   fr:{docTitle:"Louis calendrier 2027", eyebrow:"Louis Delétraz · Saison 2027", title:"Louis <em>calendrier 2027</em>", photoAlt:"Louis Delétraz à côté de sa Cadillac Hypercar",
       socials:"Réseaux sociaux", website:"Site web", partners:"Partenaires", filterBy:"Filtrer par championnat", all:"Tout", lmFull:"24 Heures du Mans",
       disclaimer:"Dates indicatives, susceptibles de changer.", close:"Fermer", next:"Prochaine", raceLength:"Durée de course", maps:"Voir sur Google Maps",
       schedule:"Horaires", watch:"Où regarder", nextRace:"Prochaine course", now:"En ce moment", racing:"En course 🏁", season:"Saison 2027", over:"Terminée — merci pour le soutien !",
       days:"jours", hours:"heures", min:"min", sec:"sec", notYet:"Pas encore publié.<br>Les horaires sortent en général quelques semaines avant la course.",
-      official:"Voir sur le site officiel ↗", localTrack:"Heure locale du circuit", partialLM:"essais, qualifs et Hyperpole pas encore publiés", locale:"fr-FR", timeMode:"Fuseau horaire", trackTime:"Heure du circuit", myTime:"Mon heure", yourTime:"Ton heure locale", addOne:"Ajouter à mon calendrier", addAll:"Tout ajouter à mon calendrier", calNote:"Enregistré dans le calendrier de ton téléphone à ton heure locale, avec une alerte 15 minutes avant chaque session.", selectAll:"Tout sélectionner", more:"Plus", cancel:"Annuler", calHint:"Touche l’icône calendrier à côté d’une session pour l’ajouter — tu pourras alors en sélectionner plusieurs d’un coup. Enregistré à ton heure locale, avec une alerte 15 minutes avant.", selectNone:"Tout désélectionner", pickNone:"Sélectionne les sessions à ajouter", addOneSel:"Ajouter 1 session à mon calendrier", addN:"Ajouter {n} sessions à mon calendrier", subscribe:"S’abonner au calendrier", incomplete:"Horaire incomplet — pas encore publié :", cat_fp:"essais libres", cat_q:"qualifs", cat_r:"course", subTitle:"S’abonner au calendrier de Louis", subIntro:"Choisis ce que tu veux dans ton téléphone. Les week-ends de course sont toujours inclus, et les nouveaux horaires s’ajoutent automatiquement.", sub_all:"Tout", sub_all_d:"Essais libres, qualifs et courses", sub_qr:"Qualifs & courses", sub_qr_d:"Sans les essais libres", sub_r:"Courses seulement", sub_r_d:"Juste les départs des courses", subNote:"Tous les week-ends de course et les horaires, mis à jour automatiquement sur ton téléphone."},
+      official:"Voir sur le site officiel ↗", localTrack:"Heure locale du circuit", partialLM:"essais, qualifs et Hyperpole pas encore publiés", locale:"fr-FR", timeMode:"Fuseau horaire", trackTime:"Heure du circuit", myTime:"Mon heure", yourTime:"Ton heure locale", addOne:"Ajouter à mon calendrier", addAll:"Tout ajouter à mon calendrier", calNote:"Enregistré dans le calendrier de ton téléphone à ton heure locale, avec une alerte 15 minutes avant chaque session.", selectAll:"Tout sélectionner", more:"Plus", moreRaces:"Plus de courses", cancel:"Annuler", calHint:"Touche l’icône calendrier à côté d’une session pour l’ajouter — tu pourras alors en sélectionner plusieurs d’un coup. Enregistré à ton heure locale, avec une alerte 15 minutes avant.", selectNone:"Tout désélectionner", pickNone:"Sélectionne les sessions à ajouter", addOneSel:"Ajouter 1 session à mon calendrier", addN:"Ajouter {n} sessions à mon calendrier", subscribe:"S’abonner au calendrier", incomplete:"Horaire incomplet — pas encore publié :", cat_fp:"essais libres", cat_q:"qualifs", cat_r:"course", subTitle:"S’abonner au calendrier de Louis", subIntro:"Choisis ce que tu veux dans ton téléphone. Les week-ends de course sont toujours inclus, et les nouveaux horaires s’ajoutent automatiquement.", sub_all:"Tout", sub_all_d:"Essais libres, qualifs et courses", sub_qr:"Qualifs & courses", sub_qr_d:"Sans les essais libres", sub_r:"Courses seulement", sub_r_d:"Juste les départs des courses", subNote:"Tous les week-ends de course et les horaires, mis à jour automatiquement sur ton téléphone."},
 };
 const MONTHS = {en:["January","February","March","April","May","June","July","August","September","October","November","December"],
                 fr:["Janvier","Février","Mars","Avril","Mai","Juin","Juillet","Août","Septembre","Octobre","Novembre","Décembre"]};
@@ -747,6 +762,17 @@ document.querySelectorAll(".lang button").forEach(b => b.addEventListener("click
 }));
 applyLang(LANG);
 setInterval(tick, 1000);
+// Indice « More races » : visible à l'ouverture, s'estompe en défilant
+function pageCue(){
+  const cue = document.getElementById("page-cue"), list = document.getElementById("list");
+  const listTop = list.getBoundingClientRect().top;
+  const scrollable = document.documentElement.scrollHeight > window.innerHeight + 40;
+  if (!scrollable || listTop < window.innerHeight * 0.55) { cue.style.setProperty("--pc", 0); }
+  else { const k = Math.max(0, Math.min(1, 1 - window.scrollY / 140)); cue.style.setProperty("--pc", k.toFixed(3)); }
+}
+window.addEventListener("scroll", pageCue, {passive:true});
+window.addEventListener("resize", pageCue);
+pageCue();
 </script>
 </body>
 </html>
