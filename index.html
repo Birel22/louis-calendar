@@ -111,12 +111,12 @@
   .tt-modal.selecting .tt-note,.tt-modal.selecting .tt-link{display:none}
 
   .scroll-fade{position:absolute;left:0;right:0;bottom:var(--cue-b,0px);height:56px;background:linear-gradient(to bottom,rgba(22,24,29,0),var(--panel));pointer-events:none;opacity:0;transition:opacity .2s}
-  .scroll-cue{position:absolute;left:50%;bottom:calc(var(--cue-b,0px) + 10px);transform:translateX(-50%);display:flex;align-items:center;gap:6px;font:600 12px 'Barlow',sans-serif;color:var(--text);background:rgba(28,31,37,.92);border:1px solid #3a3d45;border-radius:999px;padding:6px 12px 6px 10px;cursor:pointer;opacity:0;pointer-events:none;transition:opacity .2s;backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px)}
+  .scroll-cue{position:absolute;left:50%;bottom:calc(var(--cue-b,0px) + 10px);transform:translateX(-50%);display:flex;align-items:center;gap:6px;font:600 12px 'Barlow',sans-serif;color:var(--text);background:rgba(28,31,37,.92);border:1px solid #3a3d45;border-radius:999px;padding:6px 12px 6px 10px;opacity:0;pointer-events:none;transition:opacity .12s linear,transform .12s linear;backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px)}
   .scroll-cue svg{width:14px;height:14px;animation:cue-bob 1.6s ease-in-out infinite}
-  .scroll-cue:focus-visible{outline:2px solid var(--lm);outline-offset:2px}
-  .tt-modal.has-more .scroll-fade{opacity:1}
+  .tt-modal.has-more .scroll-fade{opacity:var(--cue-k,1)}
   .tt-modal.selecting .scroll-fade{display:none}
-  .tt-modal.has-more .scroll-cue{opacity:1;pointer-events:auto}
+  .tt-modal.has-more .scroll-cue{opacity:var(--cue-k,1);transform:translateX(-50%) translateY(calc((1 - var(--cue-k,1)) * 10px))}
+  .tt-modal:not(.selecting) #tt-body{padding-bottom:0}
   @keyframes cue-bob{0%,100%{transform:translateY(0)}50%{transform:translateY(3px)}}
   @media (prefers-reduced-motion: reduce){.scroll-cue svg{animation:none}}
   #tt-close{width:34px;height:34px;border-radius:50%;border:1px solid var(--line);background:var(--panel2);color:var(--text);font-size:18px;cursor:pointer}
@@ -303,7 +303,7 @@
   </footer>
 </div>
 
-<div id="tt" hidden><div class="tt-modal" role="dialog" aria-modal="true" aria-labelledby="tt-title"><div class="tt-hd"><div id="tt-hdc"></div><button id="tt-close" data-i18n-aria="close" aria-label="Close">×</button></div><div id="tt-body"></div><div id="tt-ft"></div><div class="scroll-fade" aria-hidden="true"></div><button type="button" class="scroll-cue" id="scroll-cue"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" d="M6 9l6 6 6-6"/></svg><span data-i18n="more">More</span></button></div></div>
+<div id="tt" hidden><div class="tt-modal" role="dialog" aria-modal="true" aria-labelledby="tt-title"><div class="tt-hd"><div id="tt-hdc"></div><button id="tt-close" data-i18n-aria="close" aria-label="Close">×</button></div><div id="tt-body"></div><div id="tt-ft"></div><div class="scroll-fade" aria-hidden="true"></div><div class="scroll-cue" id="scroll-cue" aria-hidden="true"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" d="M6 9l6 6 6-6"/></svg><span data-i18n="more">More</span></div></div></div>
 <script>
 // ===== Langue / Language =====
 const I18N = {
@@ -634,13 +634,15 @@ function updateCue(){
   const sel = modal.classList.contains("selecting");
   const barH = sel ? ft.getBoundingClientRect().height : 0;
   modal.style.setProperty("--cue-b", Math.max(0, barH - 30) + "px");
-  modal.style.setProperty("--ft-h", sel ? (barH + 4) + "px" : "0px");
-  const more = body.scrollHeight - body.scrollTop - body.clientHeight > 12;
-  modal.classList.toggle("has-more", more);
+  modal.style.setProperty("--ft-h", sel ? Math.max(0, barH - 26) + "px" : "0px");
+  // indice de défilement : s'estompe et glisse vers le bas à mesure qu'on approche de la fin
+  const remaining = Math.max(0, body.scrollHeight - body.scrollTop - body.clientHeight);
+  const k = Math.min(1, remaining / 90);
+  modal.style.setProperty("--cue-k", k.toFixed(3));
+  modal.classList.toggle("has-more", remaining > 4);
 }
 document.getElementById("tt-body").addEventListener("scroll", updateCue, {passive:true});
 window.addEventListener("resize", () => { if (!document.getElementById("tt").hidden) updateCue(); });
-document.getElementById("scroll-cue").addEventListener("click", () => { const b = document.getElementById("tt-body"); b.scrollBy({top: b.clientHeight * 0.7, behavior: "smooth"}); });
 function updatePickUI(){
   const box = document.querySelector(".tt-modal");
   const all = [...box.querySelectorAll(".tt-pick")], on = all.filter(c => c.checked).length;
