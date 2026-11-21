@@ -47,7 +47,8 @@
   .car-btn:focus-visible{outline:2px solid var(--lm);outline-offset:2px}
   .car-btn svg{width:18px;height:18px}
   .country-row{gap:10px !important}
-  .country{white-space:nowrap}
+  .country{white-space:nowrap;min-width:0;overflow:hidden;text-overflow:ellipsis}
+  .country-row > button{flex:none}
   .car-img{display:block;width:100%;aspect-ratio:3/2;object-fit:cover;border-radius:10px;margin:2px 0 14px;background:var(--panel2)}
   .car-specs{margin-bottom:22px}
   .spec{display:grid;grid-template-columns:38% 1fr;gap:12px;padding:8px 0;border-bottom:1px solid var(--line);font-size:14px;line-height:1.35}
