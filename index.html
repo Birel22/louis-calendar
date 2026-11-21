@@ -88,7 +88,7 @@
   .tt-btn:focus-visible{outline:2px solid var(--lm);outline-offset:2px}
   .tt-btn svg{width:12px;height:12px}
   .tt-btn.has{color:var(--text);border-color:#4a4d56}
-  #tt{position:fixed;inset:0;background:rgba(0,0,0,.6);display:flex;align-items:center;justify-content:center;padding:16px;z-index:50}
+  #tt{position:fixed;inset:0;background:rgba(0,0,0,.6);display:flex;align-items:center;justify-content:center;padding:16px;z-index:50;overscroll-behavior:contain}
   #tt[hidden]{display:none!important}
   .tt-modal{position:relative;background:var(--panel);border:1px solid var(--line);border-radius:14px;width:100%;max-width:440px;max-height:85vh;max-height:85dvh;display:flex;flex-direction:column;overflow:hidden}
   .tt-hd{flex:none;display:flex;align-items:flex-start;gap:10px;padding:16px 14px 10px 20px;border-bottom:1px solid var(--line)}
@@ -101,17 +101,21 @@
   .tt-mode button{font-size:12px !important;padding:4px 10px !important}
   .tt-off{font-size:12px;color:var(--dim);font-variant-numeric:tabular-nums}
   #tt-close{flex:none}
-  #tt-body{overflow-y:auto;overscroll-behavior:contain;padding:12px 20px 0;scrollbar-width:thin}
+  #tt-body{flex:1 1 auto;min-height:0;overflow-y:auto;-webkit-overflow-scrolling:touch;overscroll-behavior:contain;touch-action:pan-y;padding:12px 20px var(--ft-h,0px);scrollbar-width:thin}
   #tt-body > :last-child{margin-bottom:22px}
-  #tt-ft{flex:none;display:none;padding:8px 20px 14px;background:var(--panel);border-top:1px solid var(--line);box-shadow:0 -10px 24px rgba(0,0,0,.35);position:relative;z-index:2}
+  #tt-ft{position:absolute;left:0;right:0;bottom:0;z-index:3;display:none;padding:34px 20px 16px;background:linear-gradient(to bottom,rgba(22,24,29,0) 0,rgba(22,24,29,.92) 30px,var(--panel) 46px);pointer-events:none;border-bottom-left-radius:14px;border-bottom-right-radius:14px}
+  #tt-ft > *{pointer-events:auto}
+  #tt-ft .pick-bar{margin:0 0 8px}
+  #tt-ft .cal-all{box-shadow:0 8px 24px rgba(0,0,0,.45)}
   .tt-modal.selecting #tt-ft{display:block}
   .tt-modal.selecting .tt-note,.tt-modal.selecting .tt-link{display:none}
-  .tt-modal.selecting #tt-body{padding-bottom:10px}
+
   .scroll-fade{position:absolute;left:0;right:0;bottom:var(--cue-b,0px);height:56px;background:linear-gradient(to bottom,rgba(22,24,29,0),var(--panel));pointer-events:none;opacity:0;transition:opacity .2s}
   .scroll-cue{position:absolute;left:50%;bottom:calc(var(--cue-b,0px) + 10px);transform:translateX(-50%);display:flex;align-items:center;gap:6px;font:600 12px 'Barlow',sans-serif;color:var(--text);background:rgba(28,31,37,.92);border:1px solid #3a3d45;border-radius:999px;padding:6px 12px 6px 10px;cursor:pointer;opacity:0;pointer-events:none;transition:opacity .2s;backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px)}
   .scroll-cue svg{width:14px;height:14px;animation:cue-bob 1.6s ease-in-out infinite}
   .scroll-cue:focus-visible{outline:2px solid var(--lm);outline-offset:2px}
   .tt-modal.has-more .scroll-fade{opacity:1}
+  .tt-modal.selecting .scroll-fade{display:none}
   .tt-modal.has-more .scroll-cue{opacity:1;pointer-events:auto}
   @keyframes cue-bob{0%,100%{transform:translateY(0)}50%{transform:translateY(3px)}}
   @media (prefers-reduced-motion: reduce){.scroll-cue svg{animation:none}}
@@ -627,8 +631,10 @@ function buildICS(ev, t, ks){
 function updateCue(){
   const body = document.getElementById("tt-body"), modal = body.parentElement;
   const ft = document.getElementById("tt-ft");
-  const barH = modal.classList.contains("selecting") ? ft.getBoundingClientRect().height : 0;
-  modal.style.setProperty("--cue-b", barH + "px");
+  const sel = modal.classList.contains("selecting");
+  const barH = sel ? ft.getBoundingClientRect().height : 0;
+  modal.style.setProperty("--cue-b", Math.max(0, barH - 30) + "px");
+  modal.style.setProperty("--ft-h", sel ? (barH + 4) + "px" : "0px");
   const more = body.scrollHeight - body.scrollTop - body.clientHeight > 12;
   modal.classList.toggle("has-more", more);
 }
@@ -660,8 +666,11 @@ document.querySelector(".tt-modal").addEventListener("click", e => {
     return;
   }
 });
-function openTT(i){ ttOpenIdx = i; document.querySelector(".tt-modal").classList.remove("selecting"); fillTT(i); ttLastFocus = document.activeElement; document.getElementById("tt").hidden = false; document.getElementById("tt-body").scrollTop = 0; requestAnimationFrame(updateCue); document.getElementById("tt-close").focus(); }
-function closeTT(){ ttOpenIdx = null; document.getElementById("tt").hidden = true; if (ttLastFocus) ttLastFocus.focus(); }
+function openTT(i){ ttOpenIdx = i; document.querySelector(".tt-modal").classList.remove("selecting"); fillTT(i); ttLastFocus = document.activeElement; if (document.getElementById("tt").hidden) lockScroll(); document.getElementById("tt").hidden = false; document.getElementById("tt-body").scrollTop = 0; requestAnimationFrame(updateCue); document.getElementById("tt-close").focus(); }
+let lockY = 0;
+function lockScroll(){ lockY = window.scrollY; const b = document.body.style; b.position = "fixed"; b.top = `-${lockY}px`; b.left = "0"; b.right = "0"; b.width = "100%"; document.documentElement.style.overflow = "hidden"; }
+function unlockScroll(){ const b = document.body.style; b.position = b.top = b.left = b.right = b.width = ""; document.documentElement.style.overflow = ""; window.scrollTo(0, lockY); }
+function closeTT(){ ttOpenIdx = null; document.getElementById("tt").hidden = true; unlockScroll(); if (ttLastFocus) ttLastFocus.focus(); }
 document.getElementById("tt-hdc").addEventListener("click", e => {
   const b = e.target.closest(".tt-mode button"); if (!b) return;
   const keep = [...document.querySelectorAll("#tt-body .tt-pick:checked")].map(c => c.dataset.k);
@@ -676,7 +685,7 @@ function fillSub(){
   document.getElementById("tt-body").innerHTML = `<p class="tt-empty" style="padding-top:0">${T("subIntro")}</p>`
     + SUBS.map(([t,dsc,f]) => `<a class="sub-opt" href="webcal://birel22.github.io/louis-calendar/${f}"><span><b>${T(t)}</b><small>${T(dsc)}</small></span><span class="arr" aria-hidden="true">›</span></a>`).join("");
 }
-document.getElementById("sub-open").addEventListener("click", () => { ttOpenIdx = "sub"; document.querySelector(".tt-modal").classList.remove("selecting"); fillSub(); ttLastFocus = document.activeElement; document.getElementById("tt").hidden = false; document.getElementById("tt-body").scrollTop = 0; requestAnimationFrame(updateCue); document.getElementById("tt-close").focus(); });
+document.getElementById("sub-open").addEventListener("click", () => { ttOpenIdx = "sub"; document.querySelector(".tt-modal").classList.remove("selecting"); fillSub(); ttLastFocus = document.activeElement; if (document.getElementById("tt").hidden) lockScroll(); document.getElementById("tt").hidden = false; document.getElementById("tt-body").scrollTop = 0; requestAnimationFrame(updateCue); document.getElementById("tt-close").focus(); });
 document.getElementById("tt").addEventListener("click", e => { if (e.target.id === "tt") closeTT(); });
 document.getElementById("tt-close").addEventListener("click", closeTT);
 document.addEventListener("keydown", e => { if (e.key === "Escape" && !document.getElementById("tt").hidden) closeTT(); });
