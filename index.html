@@ -103,7 +103,10 @@
   #tt-close{flex:none}
   #tt-body{overflow-y:auto;overscroll-behavior:contain;padding:12px 20px 0;scrollbar-width:thin}
   #tt-body > :last-child{margin-bottom:22px}
-  .pick-area{position:sticky;bottom:0;z-index:2;margin:0 -22px;padding:10px 22px 14px;background:var(--panel);border-top:1px solid var(--line);box-shadow:0 -10px 24px rgba(0,0,0,.35)}
+  #tt-ft{flex:none;display:none;padding:8px 20px 14px;background:var(--panel);border-top:1px solid var(--line);box-shadow:0 -10px 24px rgba(0,0,0,.35);position:relative;z-index:2}
+  .tt-modal.selecting #tt-ft{display:block}
+  .tt-modal.selecting .tt-note,.tt-modal.selecting .tt-link{display:none}
+  .tt-modal.selecting #tt-body{padding-bottom:10px}
   .scroll-fade{position:absolute;left:0;right:0;bottom:var(--cue-b,0px);height:56px;background:linear-gradient(to bottom,rgba(22,24,29,0),var(--panel));pointer-events:none;opacity:0;transition:opacity .2s}
   .scroll-cue{position:absolute;left:50%;bottom:calc(var(--cue-b,0px) + 10px);transform:translateX(-50%);display:flex;align-items:center;gap:6px;font:600 12px 'Barlow',sans-serif;color:var(--text);background:rgba(28,31,37,.92);border:1px solid #3a3d45;border-radius:999px;padding:6px 12px 6px 10px;cursor:pointer;opacity:0;pointer-events:none;transition:opacity .2s;backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px)}
   .scroll-cue svg{width:14px;height:14px;animation:cue-bob 1.6s ease-in-out infinite}
@@ -138,13 +141,11 @@
   .pick-bar{display:flex;justify-content:space-between;margin:2px 0 4px}
   .pick-cancel{font:600 13px 'Barlow',sans-serif;color:var(--muted);background:none;border:0;cursor:pointer;padding:4px 0}
   .pick-cancel:hover{color:var(--text)}
-  .pick-area{display:none}
-  #tt-body.selecting .pick-area{display:block}
   .tt-row .box{display:none}
-  #tt-body.selecting .tt-row .box{display:flex}
-  #tt-body.selecting .tt-row .cal-ico{display:none}
+  .tt-modal.selecting .tt-row .box{display:flex}
+  .tt-modal.selecting .tt-row .cal-ico{display:none}
   .tt-row.pick{cursor:default}
-  #tt-body.selecting .tt-row.pick{cursor:pointer}
+  .tt-modal.selecting .tt-row.pick{cursor:pointer}
   .cal-ico{display:flex;align-items:center;justify-content:center;width:30px;height:30px;margin-right:-4px;border-radius:8px;border:1px solid var(--line);background:none;color:var(--muted);cursor:pointer;transition:color .15s,border-color .15s}
   .cal-ico:hover{color:var(--text);border-color:#4a4d56}
   .cal-ico:focus-visible{outline:2px solid var(--lm);outline-offset:2px}
@@ -298,7 +299,7 @@
   </footer>
 </div>
 
-<div id="tt" hidden><div class="tt-modal" role="dialog" aria-modal="true" aria-labelledby="tt-title"><div class="tt-hd"><div id="tt-hdc"></div><button id="tt-close" data-i18n-aria="close" aria-label="Close">×</button></div><div id="tt-body"></div><div class="scroll-fade" aria-hidden="true"></div><button type="button" class="scroll-cue" id="scroll-cue"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" d="M6 9l6 6 6-6"/></svg><span data-i18n="more">More</span></button></div></div>
+<div id="tt" hidden><div class="tt-modal" role="dialog" aria-modal="true" aria-labelledby="tt-title"><div class="tt-hd"><div id="tt-hdc"></div><button id="tt-close" data-i18n-aria="close" aria-label="Close">×</button></div><div id="tt-body"></div><div id="tt-ft"></div><div class="scroll-fade" aria-hidden="true"></div><button type="button" class="scroll-cue" id="scroll-cue"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" d="M6 9l6 6 6-6"/></svg><span data-i18n="more">More</span></button></div></div>
 <script>
 // ===== Langue / Language =====
 const I18N = {
@@ -590,7 +591,7 @@ function fillTT(i){
   const ev = EVENTS[i], t = TIMETABLES[ev.id];
   const link = t ? t.src : OFFICIAL[ev.series];
   let hd = `<div class="tt-head ${ev.series}"><h3 id="tt-title">${esc(L(ev.name))}</h3><small>${LABEL[ev.series]} · ${dateLabel(ev).big} ${dateLabel(ev).small} · ${ev.flag} ${esc(L(ev.country))}</small></div>`;
-  let html = "";
+  let html = "", ft = "";
   if (t){
     const viewerTz = Intl.DateTimeFormat().resolvedOptions().timeZone;
     const zone = ttMode === "track" ? t.tz : viewerTz;
@@ -605,13 +606,15 @@ function fillTT(i){
       g.rows.push(`<label class="tt-row pick"><span>${tm}</span><span>${esc(L(s.label))}</span><input type="checkbox" class="tt-pick" data-k="${k}" aria-label="${esc(L(s.label))}"><i class="box" aria-hidden="true"></i><button type="button" class="cal-ico" data-k="${k}" aria-label="${T("addOne")} – ${esc(L(s.label))}" title="${T("addOne")}">${CALICON}</button></label>`);
     });
     html += days.map(g => `<div class="tt-day"><b>${esc(g.label)}</b>${g.rows.join("")}</div>`).join("");
-    html += `<div class="pick-area"><div class="pick-bar"><button type="button" class="pick-cancel">${T("cancel")}</button><button type="button" class="pick-toggle">${T("selectAll")}</button></div><button type="button" class="cal-all" disabled>${CALICON}<span class="cal-all-txt">${T("pickNone")}</span></button></div><p class="tt-note">${T("calHint")}</p>`;
+    ft = `<div class="pick-area"><div class="pick-bar"><button type="button" class="pick-cancel">${T("cancel")}</button><button type="button" class="pick-toggle">${T("selectAll")}</button></div><button type="button" class="cal-all" disabled>${CALICON}<span class="cal-all-txt">${T("pickNone")}</span></button></div>`;
+    html += `<p class="tt-note">${T("calHint")}</p>`;
   } else {
     html += `<p class="tt-empty">${T("notYet")}</p>`;
   }
   html += `<a class="tt-link" href="${link}" target="_blank" rel="noopener">${T("official")}</a>`;
   document.getElementById("tt-hdc").innerHTML = hd;
   document.getElementById("tt-body").innerHTML = html;
+  document.getElementById("tt-ft").innerHTML = ft;
 }
 function icsEsc(t){ return String(t).replace(/\\/g,"\\\\").replace(/,/g,"\\,").replace(/;/g,"\\;").replace(/\n/g,"\\n"); }
 function icsDate(dt){ return dt.toISOString().replace(/[-:]/g,"").replace(/\.\d{3}/,""); }
@@ -623,8 +626,8 @@ function buildICS(ev, t, ks){
 }
 function updateCue(){
   const body = document.getElementById("tt-body"), modal = body.parentElement;
-  const bar = body.classList.contains("selecting") ? body.querySelector(".pick-area") : null;
-  const barH = bar ? bar.getBoundingClientRect().height : 0;
+  const ft = document.getElementById("tt-ft");
+  const barH = modal.classList.contains("selecting") ? ft.getBoundingClientRect().height : 0;
   modal.style.setProperty("--cue-b", barH + "px");
   const more = body.scrollHeight - body.scrollTop - body.clientHeight > 12;
   modal.classList.toggle("has-more", more);
@@ -633,7 +636,7 @@ document.getElementById("tt-body").addEventListener("scroll", updateCue, {passiv
 window.addEventListener("resize", () => { if (!document.getElementById("tt").hidden) updateCue(); });
 document.getElementById("scroll-cue").addEventListener("click", () => { const b = document.getElementById("tt-body"); b.scrollBy({top: b.clientHeight * 0.7, behavior: "smooth"}); });
 function updatePickUI(){
-  const box = document.getElementById("tt-body");
+  const box = document.querySelector(".tt-modal");
   const all = [...box.querySelectorAll(".tt-pick")], on = all.filter(c => c.checked).length;
   const btn = box.querySelector(".cal-all"); if (!btn) return;
   btn.disabled = on === 0;
@@ -642,8 +645,8 @@ function updatePickUI(){
   requestAnimationFrame(updateCue);
 }
 document.getElementById("tt-body").addEventListener("change", e => { if (e.target.classList.contains("tt-pick")) updatePickUI(); });
-document.getElementById("tt-body").addEventListener("click", e => {
-  const box = document.getElementById("tt-body");
+document.querySelector(".tt-modal").addEventListener("click", e => {
+  const box = document.querySelector(".tt-modal");
   const ico = e.target.closest(".cal-ico");
   if (ico){ e.preventDefault(); box.classList.add("selecting"); const c = box.querySelector(`.tt-pick[data-k="${ico.dataset.k}"]`); if (c) c.checked = true; updatePickUI(); return; }
   if (!box.classList.contains("selecting") && e.target.closest(".tt-row.pick")){ e.preventDefault(); return; }
@@ -656,13 +659,8 @@ document.getElementById("tt-body").addEventListener("click", e => {
     window.location.href = ICS_BASE + `ics/${ev.id}-m${mask}.ics`;
     return;
   }
-  const b = e.target.closest(".tt-mode button"); if (!b) return;
-  const keep = [...document.querySelectorAll("#tt-body .tt-pick:checked")].map(c => c.dataset.k);
-  ttMode = b.dataset.mode; try { localStorage.setItem("ttMode2", ttMode); } catch(err){}
-  fillTT(ttOpenIdx);
-  keep.forEach(k => { const c = document.querySelector(`#tt-body .tt-pick[data-k="${k}"]`); if (c) c.checked = true; }); updatePickUI();
 });
-function openTT(i){ ttOpenIdx = i; document.getElementById("tt-body").classList.remove("selecting"); fillTT(i); ttLastFocus = document.activeElement; document.getElementById("tt").hidden = false; document.getElementById("tt-body").scrollTop = 0; requestAnimationFrame(updateCue); document.getElementById("tt-close").focus(); }
+function openTT(i){ ttOpenIdx = i; document.querySelector(".tt-modal").classList.remove("selecting"); fillTT(i); ttLastFocus = document.activeElement; document.getElementById("tt").hidden = false; document.getElementById("tt-body").scrollTop = 0; requestAnimationFrame(updateCue); document.getElementById("tt-close").focus(); }
 function closeTT(){ ttOpenIdx = null; document.getElementById("tt").hidden = true; if (ttLastFocus) ttLastFocus.focus(); }
 document.getElementById("tt-hdc").addEventListener("click", e => {
   const b = e.target.closest(".tt-mode button"); if (!b) return;
@@ -674,10 +672,11 @@ document.getElementById("tt-hdc").addEventListener("click", e => {
 const SUBS = [["sub_all","sub_all_d","louis-2027.ics"],["sub_qr","sub_qr_d","louis-2027-quali-race.ics"],["sub_r","sub_r_d","louis-2027-races.ics"]];
 function fillSub(){
   document.getElementById("tt-hdc").innerHTML = `<div class="tt-head lm"><h3 id="tt-title">${T("subTitle")}</h3></div>`;
+  document.getElementById("tt-ft").innerHTML = "";
   document.getElementById("tt-body").innerHTML = `<p class="tt-empty" style="padding-top:0">${T("subIntro")}</p>`
     + SUBS.map(([t,dsc,f]) => `<a class="sub-opt" href="webcal://birel22.github.io/louis-calendar/${f}"><span><b>${T(t)}</b><small>${T(dsc)}</small></span><span class="arr" aria-hidden="true">›</span></a>`).join("");
 }
-document.getElementById("sub-open").addEventListener("click", () => { ttOpenIdx = "sub"; document.getElementById("tt-body").classList.remove("selecting"); fillSub(); ttLastFocus = document.activeElement; document.getElementById("tt").hidden = false; document.getElementById("tt-body").scrollTop = 0; requestAnimationFrame(updateCue); document.getElementById("tt-close").focus(); });
+document.getElementById("sub-open").addEventListener("click", () => { ttOpenIdx = "sub"; document.querySelector(".tt-modal").classList.remove("selecting"); fillSub(); ttLastFocus = document.activeElement; document.getElementById("tt").hidden = false; document.getElementById("tt-body").scrollTop = 0; requestAnimationFrame(updateCue); document.getElementById("tt-close").focus(); });
 document.getElementById("tt").addEventListener("click", e => { if (e.target.id === "tt") closeTT(); });
 document.getElementById("tt-close").addEventListener("click", closeTT);
 document.addEventListener("keydown", e => { if (e.key === "Escape" && !document.getElementById("tt").hidden) closeTT(); });
