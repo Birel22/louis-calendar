@@ -566,8 +566,8 @@ document.querySelectorAll(".chip").forEach(btn => btn.addEventListener("click", 
 
 // Timetable dialog
 let ttLastFocus = null, ttOpenIdx = null;
-let ttMode = "track";
-try { if (localStorage.getItem("ttMode") === "mine") ttMode = "mine"; } catch(e){}
+let ttMode = "mine";
+try { if (localStorage.getItem("ttMode2") === "track") ttMode = "track"; } catch(e){}
 const CALICON = '<svg viewBox="0 0 24 24" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="2"><rect x="3.5" y="5" width="17" height="15.5" rx="2.5"/><path d="M3.5 10h17M8 3v4M16 3v4M12 13v5M9.5 15.5h5"/></g></svg>';
 const ICS_BASE = "";
 const SUB_URL = "webcal://birel22.github.io/louis-calendar/louis-2027.ics";
@@ -580,7 +580,7 @@ function fillTT(i){
     const viewerTz = Intl.DateTimeFormat().resolvedOptions().timeZone;
     const zone = ttMode === "track" ? t.tz : viewerTz;
     const first = new Date(t.sessions[0].utc);
-    html += `<div class="tt-mode" role="group" aria-label="${T("timeMode")}"><button data-mode="track" aria-pressed="${ttMode==="track"}">${T("trackTime")}</button><button data-mode="mine" aria-pressed="${ttMode==="mine"}">${T("myTime")}</button></div>`;
+    html += `<div class="tt-mode" role="group" aria-label="${T("timeMode")}"><button data-mode="mine" aria-pressed="${ttMode==="mine"}">${T("myTime")}</button><button data-mode="track" aria-pressed="${ttMode==="track"}">${T("trackTime")}</button></div>`;
     html += `<p class="tt-tz">${ttMode==="track" ? T("localTrack") + " · " + offsetLabel(first, t.tz) : T("yourTime") + " · " + esc(viewerTz.replace(/_/g," ")) + " (" + offsetLabel(first, viewerTz) + ")"}${t.partial ? "<br>" + T(t.partial) : ""}</p>`;
     const days = [];
     t.sessions.forEach((s, k) => {
@@ -627,7 +627,7 @@ document.getElementById("tt-body").addEventListener("click", e => {
   }
   const b = e.target.closest(".tt-mode button"); if (!b) return;
   const keep = [...document.querySelectorAll("#tt-body .tt-pick:checked")].map(c => c.dataset.k);
-  ttMode = b.dataset.mode; try { localStorage.setItem("ttMode", ttMode); } catch(err){}
+  ttMode = b.dataset.mode; try { localStorage.setItem("ttMode2", ttMode); } catch(err){}
   fillTT(ttOpenIdx);
   keep.forEach(k => { const c = document.querySelector(`#tt-body .tt-pick[data-k="${k}"]`); if (c) c.checked = true; }); updatePickUI();
 });
