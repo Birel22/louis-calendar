@@ -33,7 +33,7 @@ def vevent(eid,i,ev,sess):
     return "\r\n".join(["BEGIN:VEVENT",f"UID:{eid}-{i}-2027@louisdeletraz-calendar",f"DTSTAMP:{fmt(datetime.now(UTC))}",
       f"DTSTART:{fmt(st)}",f"DTEND:{fmt(st+timedelta(minutes=mins))}",f"SUMMARY:{esc(name)}",f"LOCATION:{esc(ev['loc'])}",
       f"DESCRIPTION:{esc('Louis Delétraz · '+ev['title']+' · '+ev['src'])}",
-      "BEGIN:VALARM","ACTION:DISPLAY",f"DESCRIPTION:{esc(name)}","TRIGGER:PT0M","END:VALARM","END:VEVENT"])
+      "BEGIN:VALARM","ACTION:DISPLAY",f"DESCRIPTION:{esc(name)}","TRIGGER:-PT15M","END:VALARM","END:VEVENT"])
 def cal(events):
     return "\r\n".join(["BEGIN:VCALENDAR","VERSION:2.0","PRODID:-//Louis Deletraz//Calendar 2027//EN","CALSCALE:GREGORIAN","METHOD:PUBLISH",*events,"END:VCALENDAR"])+"\r\n"
 import os

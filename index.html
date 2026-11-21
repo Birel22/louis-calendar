@@ -107,7 +107,18 @@
   .tt-mode button{font:600 13px 'Barlow',sans-serif;color:var(--muted);background:none;border:0;border-radius:999px;padding:5px 12px;cursor:pointer}
   .tt-mode button[aria-pressed="true"]{background:var(--text);color:var(--bg)}
   .tt-mode button:focus-visible,.cal-add:focus-visible,.cal-all:focus-visible{outline:2px solid var(--lm);outline-offset:2px}
-  .tt-row{grid-template-columns:56px 1fr 34px !important;align-items:center}
+  .tt-row{grid-template-columns:56px 1fr 26px !important;align-items:center}
+  .tt-row.pick{cursor:pointer;position:relative}
+  .tt-row.pick input{position:absolute;opacity:0;width:1px;height:1px}
+  .tt-row .box{width:22px;height:22px;border-radius:6px;border:1.5px solid #555963;display:flex;align-items:center;justify-content:center;transition:background .15s,border-color .15s}
+  .tt-row input:checked + .box{background:var(--text);border-color:var(--text)}
+  .tt-row input:checked + .box::after{content:"";width:6px;height:11px;border:solid var(--bg);border-width:0 2.5px 2.5px 0;transform:rotate(45deg) translate(-1px,-1px)}
+  .tt-row input:focus-visible + .box{outline:2px solid var(--lm);outline-offset:2px}
+  .pick-bar{display:flex;justify-content:flex-end;margin:2px 0 4px}
+  .pick-toggle{font:600 13px 'Barlow',sans-serif;color:var(--muted);background:none;border:0;text-decoration:underline;text-underline-offset:3px;cursor:pointer;padding:4px 0}
+  .pick-toggle:hover{color:var(--text)}
+  .cal-all{width:100%;border:0;cursor:pointer}
+  .cal-all:disabled{background:var(--panel2);color:var(--dim);cursor:default}
   .cal-add{display:flex;align-items:center;justify-content:center;width:32px;height:32px;border-radius:8px;border:1px solid var(--line);color:var(--muted);transition:color .15s,border-color .15s}
   .cal-add:hover{color:var(--text);border-color:#4a4d56}
   .cal-add svg{width:16px;height:16px}
@@ -255,13 +266,13 @@ const I18N = {
       disclaimer:"Dates are provisional and subject to change.", close:"Close", next:"Next", raceLength:"Race length", maps:"View on Google Maps",
       schedule:"Schedule", watch:"Where to watch", nextRace:"Next race", now:"Right now", racing:"Racing 🏁", season:"Season 2027", over:"Over — thanks for the support!",
       days:"days", hours:"hours", min:"min", sec:"sec", notYet:"Not published yet.<br>Schedules usually come out a few weeks before the race.",
-      official:"View on the official website ↗", localTrack:"Local track time", partialLM:"practice, qualifying and Hyperpole not published yet", locale:"en-GB", timeMode:"Time zone", trackTime:"Track time", myTime:"My time", yourTime:"Your local time", addOne:"Add to my calendar", addAll:"Add all to my calendar", calNote:"Saved in your phone’s calendar in your own time zone, with an alert when the session starts.", subscribe:"Subscribe to the calendar", subNote:"All race weekends and schedules, updated automatically on your phone."},
+      official:"View on the official website ↗", localTrack:"Local track time", partialLM:"practice, qualifying and Hyperpole not published yet", locale:"en-GB", timeMode:"Time zone", trackTime:"Track time", myTime:"My time", yourTime:"Your local time", addOne:"Add to my calendar", addAll:"Add all to my calendar", calNote:"Saved in your phone’s calendar in your own time zone, with an alert 15 minutes before each session.", selectAll:"Select all", selectNone:"Clear selection", pickNone:"Select sessions to add", addOneSel:"Add 1 session to my calendar", addN:"Add {n} sessions to my calendar", subscribe:"Subscribe to the calendar", subNote:"All race weekends and schedules, updated automatically on your phone."},
   fr:{docTitle:"Louis calendrier 2027", eyebrow:"Louis Delétraz · Saison 2027", title:"Louis <em>calendrier 2027</em>", photoAlt:"Louis Delétraz à côté de sa Cadillac Hypercar",
       socials:"Réseaux sociaux", website:"Site web", partners:"Partenaires", filterBy:"Filtrer par championnat", all:"Tout", lmFull:"24 Heures du Mans",
       disclaimer:"Dates indicatives, susceptibles de changer.", close:"Fermer", next:"Prochaine", raceLength:"Durée de course", maps:"Voir sur Google Maps",
       schedule:"Horaires", watch:"Où regarder", nextRace:"Prochaine course", now:"En ce moment", racing:"En course 🏁", season:"Saison 2027", over:"Terminée — merci pour le soutien !",
       days:"jours", hours:"heures", min:"min", sec:"sec", notYet:"Pas encore publié.<br>Les horaires sortent en général quelques semaines avant la course.",
-      official:"Voir sur le site officiel ↗", localTrack:"Heure locale du circuit", partialLM:"essais, qualifs et Hyperpole pas encore publiés", locale:"fr-FR", timeMode:"Fuseau horaire", trackTime:"Heure du circuit", myTime:"Mon heure", yourTime:"Ton heure locale", addOne:"Ajouter à mon calendrier", addAll:"Tout ajouter à mon calendrier", calNote:"Enregistré dans le calendrier de ton téléphone à ton heure locale, avec une alerte au début de la session.", subscribe:"S’abonner au calendrier", subNote:"Tous les week-ends de course et les horaires, mis à jour automatiquement sur ton téléphone."},
+      official:"Voir sur le site officiel ↗", localTrack:"Heure locale du circuit", partialLM:"essais, qualifs et Hyperpole pas encore publiés", locale:"fr-FR", timeMode:"Fuseau horaire", trackTime:"Heure du circuit", myTime:"Mon heure", yourTime:"Ton heure locale", addOne:"Ajouter à mon calendrier", addAll:"Tout ajouter à mon calendrier", calNote:"Enregistré dans le calendrier de ton téléphone à ton heure locale, avec une alerte 15 minutes avant chaque session.", selectAll:"Tout sélectionner", selectNone:"Tout désélectionner", pickNone:"Sélectionne les sessions à ajouter", addOneSel:"Ajouter 1 session à mon calendrier", addN:"Ajouter {n} sessions à mon calendrier", subscribe:"S’abonner au calendrier", subNote:"Tous les week-ends de course et les horaires, mis à jour automatiquement sur ton téléphone."},
 };
 const MONTHS = {en:["January","February","March","April","May","June","July","August","September","October","November","December"],
                 fr:["Janvier","Février","Mars","Avril","Mai","Juin","Juillet","Août","Septembre","Octobre","Novembre","Décembre"]};
@@ -577,20 +588,52 @@ function fillTT(i){
       let dl = dt.toLocaleDateString(T("locale"), {timeZone:zone, weekday:"short", day:"numeric", month:"short"}); dl = dl.charAt(0).toUpperCase()+dl.slice(1);
       const tm = dt.toLocaleTimeString(T("locale"), {timeZone:zone, hour:"2-digit", minute:"2-digit", hourCycle:"h23"});
       let g = days[days.length-1]; if (!g || g.label !== dl) { g = {label:dl, rows:[]}; days.push(g); }
-      g.rows.push(`<div class="tt-row"><span>${tm}</span><span>${esc(L(s.label))}</span><a class="cal-add" href="${ICS_BASE}ics/${ev.id}-${k}.ics" target="_blank" rel="noopener" aria-label="${T("addOne")} – ${esc(L(s.label))}" title="${T("addOne")}">${CALICON}</a></div>`);
+      g.rows.push(`<label class="tt-row pick"><span>${tm}</span><span>${esc(L(s.label))}</span><input type="checkbox" class="tt-pick" data-k="${k}" aria-label="${esc(L(s.label))}"><i class="box" aria-hidden="true"></i></label>`);
     });
     html += days.map(g => `<div class="tt-day"><b>${esc(g.label)}</b>${g.rows.join("")}</div>`).join("");
-    html += `<a class="cal-all" href="${ICS_BASE}ics/${ev.id}-all.ics" target="_blank" rel="noopener">${CALICON}${T("addAll")}</a><p class="tt-note">${T("calNote")}</p>`;
+    html += `<div class="pick-bar"><button type="button" class="pick-toggle">${T("selectAll")}</button></div><button type="button" class="cal-all" disabled>${CALICON}<span class="cal-all-txt">${T("pickNone")}</span></button><p class="tt-note">${T("calNote")}</p>`;
   } else {
     html += `<p class="tt-empty">${T("notYet")}</p>`;
   }
   html += `<a class="tt-link" href="${link}" target="_blank" rel="noopener">${T("official")}</a>`;
   document.getElementById("tt-body").innerHTML = html;
 }
+function icsEsc(t){ return String(t).replace(/\\/g,"\\\\").replace(/,/g,"\\,").replace(/;/g,"\\;").replace(/\n/g,"\\n"); }
+function icsDate(dt){ return dt.toISOString().replace(/[-:]/g,"").replace(/\.\d{3}/,""); }
+function buildICS(ev, t, ks){
+  const now = icsDate(new Date());
+  const vev = ks.map(k => { const s = t.sessions[k]; const st = new Date(s.utc), en = new Date(st.getTime()+s.min*60000); const nm = `${t.title} – ${s.label.en}`;
+    return ["BEGIN:VEVENT",`UID:${ev.id}-${k}-2027@louisdeletraz-calendar`,`DTSTAMP:${now}`,`DTSTART:${icsDate(st)}`,`DTEND:${icsDate(en)}`,`SUMMARY:${icsEsc(nm)}`,`LOCATION:${icsEsc(t.loc)}`,`DESCRIPTION:${icsEsc("Louis Delétraz · "+t.title+" · "+t.src)}`,"BEGIN:VALARM","ACTION:DISPLAY",`DESCRIPTION:${icsEsc(nm)}`,"TRIGGER:-PT15M","END:VALARM","END:VEVENT"].join("\r\n"); });
+  return ["BEGIN:VCALENDAR","VERSION:2.0","PRODID:-//Louis Deletraz//Calendar 2027//EN","CALSCALE:GREGORIAN","METHOD:PUBLISH",...vev,"END:VCALENDAR"].join("\r\n")+"\r\n";
+}
+function updatePickUI(){
+  const box = document.getElementById("tt-body");
+  const all = [...box.querySelectorAll(".tt-pick")], on = all.filter(c => c.checked).length;
+  const btn = box.querySelector(".cal-all"); if (!btn) return;
+  btn.disabled = on === 0;
+  box.querySelector(".cal-all-txt").textContent = on === 0 ? T("pickNone") : (on === 1 ? T("addOneSel") : T("addN").replace("{n}", on));
+  box.querySelector(".pick-toggle").textContent = on === all.length ? T("selectNone") : T("selectAll");
+}
+document.getElementById("tt-body").addEventListener("change", e => { if (e.target.classList.contains("tt-pick")) updatePickUI(); });
 document.getElementById("tt-body").addEventListener("click", e => {
+  const box = document.getElementById("tt-body");
+  if (e.target.closest(".pick-toggle")){ const all=[...box.querySelectorAll(".tt-pick")]; const on=all.every(c=>c.checked); all.forEach(c=>c.checked=!on); updatePickUI(); return; }
+  if (e.target.closest(".cal-all")){
+    const ev = EVENTS[ttOpenIdx], t = TIMETABLES[ev.id];
+    const ks = [...box.querySelectorAll(".tt-pick:checked")].map(c => +c.dataset.k); if (!ks.length) return;
+    const ics = buildICS(ev, t, ks);
+    const ios = /iPad|iPhone|iPod/.test(navigator.userAgent) || (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1);
+    if (ios){ window.location.href = "data:text/calendar;charset=utf-8," + encodeURIComponent(ics); return; }
+    const url = URL.createObjectURL(new Blob([ics], {type:"text/calendar;charset=utf-8"}));
+    const a = document.createElement("a"); a.href = url; a.download = `${ev.id}-2027.ics`; document.body.appendChild(a); a.click(); a.remove();
+    setTimeout(() => URL.revokeObjectURL(url), 4000);
+    return;
+  }
   const b = e.target.closest(".tt-mode button"); if (!b) return;
+  const keep = [...document.querySelectorAll("#tt-body .tt-pick:checked")].map(c => c.dataset.k);
   ttMode = b.dataset.mode; try { localStorage.setItem("ttMode", ttMode); } catch(err){}
   fillTT(ttOpenIdx);
+  keep.forEach(k => { const c = document.querySelector(`#tt-body .tt-pick[data-k="${k}"]`); if (c) c.checked = true; }); updatePickUI();
 });
 function openTT(i){ ttOpenIdx = i; fillTT(i); ttLastFocus = document.activeElement; document.getElementById("tt").hidden = false; document.getElementById("tt-close").focus(); }
 function closeTT(){ ttOpenIdx = null; document.getElementById("tt").hidden = true; if (ttLastFocus) ttLastFocus.focus(); }
