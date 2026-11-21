@@ -42,6 +42,13 @@ import os
 import shutil
 shutil.rmtree("/home/claude/louis-calendar/ics", ignore_errors=True)
 os.makedirs("/home/claude/louis-calendar/ics", exist_ok=True)
+# Règle de Louis : on ne publie QUE les horaires complets (essais libres + qualifs + course).
+# Les horaires incomplets restent ici dans EV (suivi), mais ne vont ni sur la page ni dans les .ics.
+def missing_of(ev): return [c for c in ("fp","q","r") if c not in {CAT[k] for _,_,k in ev["s"]}]
+PENDING = {eid: missing_of(ev) for eid, ev in EV.items() if missing_of(ev)}
+EV_ALL = EV
+EV = {eid: ev for eid, ev in EV_ALL.items() if not missing_of(ev)}
+print("publiés:", sorted(EV), "| en attente (incomplets):", PENDING)
 js = {}
 for eid,ev in EV.items():
     vs=[vevent(eid,i,ev,s) for i,s in enumerate(ev["s"])]
