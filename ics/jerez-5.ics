@@ -1,0 +1,20 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Louis Deletraz//Calendar 2027//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+BEGIN:VEVENT
+UID:jerez-5-2027@louisdeletraz-calendar
+DTSTAMP:20261121T003108Z
+DTSTART:20270115T161000Z
+DTEND:20270115T162500Z
+SUMMARY:ALMS Jerez – Qualifying 2 – Hypercar & LMP2
+LOCATION:Circuito de Jerez – Ángel Nieto\, Jerez de la Frontera\, Spain
+DESCRIPTION:Louis Delétraz · ALMS Jerez · https://www.asianlemansseries.com/en/race/4-hours-of-jerez-by-alms-2027
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:ALMS Jerez – Qualifying 2 – Hypercar & LMP2
+TRIGGER:PT0M
+END:VALARM
+END:VEVENT
+END:VCALENDAR
