@@ -42,6 +42,19 @@
   .lang button{font:700 13px 'Barlow Condensed';letter-spacing:.12em;color:var(--muted);background:none;border:0;border-radius:999px;padding:6px 12px;cursor:pointer}
   .lang button[aria-pressed="true"]{background:var(--text);color:var(--bg)}
   .lang button:focus-visible{outline:2px solid var(--lm);outline-offset:2px}
+  .car-btn{display:inline-flex;align-items:center;justify-content:center;width:30px;height:26px;border-radius:999px;border:1px solid var(--line);background:none;color:var(--muted);cursor:pointer;transition:color .15s,border-color .15s}
+  .car-btn:hover{color:var(--text);border-color:#4a4d56}
+  .car-btn:focus-visible{outline:2px solid var(--lm);outline-offset:2px}
+  .car-btn svg{width:18px;height:18px}
+  .country-row{gap:10px !important}
+  .country{white-space:nowrap}
+  .car-img{display:block;width:100%;aspect-ratio:3/2;object-fit:cover;border-radius:10px;margin:2px 0 14px;background:var(--panel2)}
+  .car-specs{margin-bottom:22px}
+  .spec{display:grid;grid-template-columns:38% 1fr;gap:12px;padding:8px 0;border-bottom:1px solid var(--line);font-size:14px;line-height:1.35}
+  .spec span:first-child{color:var(--muted)}
+  .ev.past{opacity:.42;filter:grayscale(.7);transition:opacity .2s}
+  .ev.past:hover{opacity:.75}
+  .partners-foot{margin:34px 0 0}
   .page-cue{position:fixed;left:50%;bottom:calc(14px + env(safe-area-inset-bottom));transform:translateX(-50%) translateY(calc((1 - var(--pc,1)) * 12px));opacity:var(--pc,1);display:flex;align-items:center;gap:6px;font:600 13px 'Barlow',sans-serif;color:var(--text);background:rgba(28,31,37,.9);border:1px solid #3a3d45;border-radius:999px;padding:7px 14px 7px 11px;pointer-events:none;z-index:40;backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);box-shadow:0 6px 20px rgba(0,0,0,.4);transition:opacity .12s linear,transform .12s linear}
   .page-cue svg{width:14px;height:14px;animation:cue-bob 1.6s ease-in-out infinite}
   .page-cue.gone{display:none}
@@ -223,6 +236,7 @@
 
   [hidden]{display:none!important}
 
+  @media (max-width:360px){ .tt-btn{font-size:0;gap:0;padding:4px 8px} .tt-btn svg{width:14px;height:14px} .country-row{gap:8px !important} }
   @media (max-width:620px) and (max-height:620px){ .hero{min-height:214px !important} .hero h1{font-size:32px !important} .partners{padding:8px 12px !important} }
   @media (max-width:620px){
     .wrap{padding:12px 12px 48px}
@@ -304,6 +318,11 @@
 
   <main id="list"></main>
 
+  <div class="partners partners-foot" data-i18n-aria="partners" aria-label="Partners">
+    <a href="https://www.cadillac.com/racing" target="_blank" rel="noopener"><img class="p-cad" src="cadillac.png" alt="Cadillac Racing"></a>
+    <a href="https://aoracing.com" target="_blank" rel="noopener"><img class="p-ao" src="ao.png" alt="AO Racing"></a>
+    <a href="https://conextivity.com" target="_blank" rel="noopener"><img class="p-cnx" src="conextivity.png" alt="Conextivity Group"></a>
+  </div>
   <footer>
     <div class="legend">
       <span><i style="background:var(--alms)"></i>Asian Le Mans Series</span>
@@ -327,13 +346,13 @@ const I18N = {
       disclaimer:"Dates are provisional and subject to change.", close:"Close", next:"Next", raceLength:"Race length", maps:"View on Google Maps",
       schedule:"Schedule", watch:"Where to watch", nextRace:"Next race", now:"Right now", racing:"Racing 🏁", season:"Season 2027", over:"Over — thanks for the support!",
       days:"days", hours:"hours", min:"min", sec:"sec", notYet:"Not published yet.<br>Schedules usually come out a few weeks before the race.",
-      official:"View on the official website ↗", localTrack:"Local track time", partialLM:"practice, qualifying and Hyperpole not published yet", locale:"en-GB", timeMode:"Time zone", trackTime:"Track time", myTime:"My time", yourTime:"Your local time", addOne:"Add to my calendar", addAll:"Add all to my calendar", calNote:"Saved in your phone’s calendar in your own time zone, with an alert 15 minutes before each session.", selectAll:"Select all", more:"More", moreRaces:"More races", cancel:"Cancel", calHint:"Tap the calendar icon next to a session to add it — you can then select several at once. Saved in your own time zone, with an alert 15 minutes before.", selectNone:"Clear selection", pickNone:"Select sessions to add", addOneSel:"Add 1 session to my calendar", addN:"Add {n} sessions to my calendar", subscribe:"Subscribe to the calendar", incomplete:"Incomplete schedule — not published yet:", cat_fp:"free practice", cat_q:"qualifying", cat_r:"race", subTitle:"Subscribe to Louis’s calendar", subIntro:"Pick what you want on your phone. Race weekends are always included, and new schedules are added automatically.", sub_all:"Everything", sub_all_d:"Free practice, qualifying and races", sub_qr:"Qualifying & races", sub_qr_d:"No free practice", sub_r:"Races only", sub_r_d:"Just the race starts", subNote:"All race weekends and schedules, updated automatically on your phone."},
+      official:"View on the official website ↗", localTrack:"Local track time", partialLM:"practice, qualifying and Hyperpole not published yet", locale:"en-GB", timeMode:"Time zone", trackTime:"Track time", myTime:"My time", yourTime:"Your local time", addOne:"Add to my calendar", addAll:"Add all to my calendar", calNote:"Saved in your phone’s calendar in your own time zone, with an alert 15 minutes before each session.", selectAll:"Select all", carSpecs:"Car specs", more:"More", moreRaces:"More races", cancel:"Cancel", calHint:"Tap the calendar icon next to a session to add it — you can then select several at once. Saved in your own time zone, with an alert 15 minutes before.", selectNone:"Clear selection", pickNone:"Select sessions to add", addOneSel:"Add 1 session to my calendar", addN:"Add {n} sessions to my calendar", subscribe:"Subscribe to the calendar", incomplete:"Incomplete schedule — not published yet:", cat_fp:"free practice", cat_q:"qualifying", cat_r:"race", subTitle:"Subscribe to Louis’s calendar", subIntro:"Pick what you want on your phone. Race weekends are always included, and new schedules are added automatically.", sub_all:"Everything", sub_all_d:"Free practice, qualifying and races", sub_qr:"Qualifying & races", sub_qr_d:"No free practice", sub_r:"Races only", sub_r_d:"Just the race starts", subNote:"All race weekends and schedules, updated automatically on your phone."},
   fr:{docTitle:"Louis calendrier 2027", eyebrow:"Louis Delétraz · Saison 2027", title:"Louis <em>calendrier 2027</em>", photoAlt:"Louis Delétraz à côté de sa Cadillac Hypercar",
       socials:"Réseaux sociaux", website:"Site web", partners:"Partenaires", filterBy:"Filtrer par championnat", all:"Tout", lmFull:"24 Heures du Mans",
       disclaimer:"Dates indicatives, susceptibles de changer.", close:"Fermer", next:"Prochaine", raceLength:"Durée de course", maps:"Voir sur Google Maps",
       schedule:"Horaires", watch:"Où regarder", nextRace:"Prochaine course", now:"En ce moment", racing:"En course 🏁", season:"Saison 2027", over:"Terminée — merci pour le soutien !",
       days:"jours", hours:"heures", min:"min", sec:"sec", notYet:"Pas encore publié.<br>Les horaires sortent en général quelques semaines avant la course.",
-      official:"Voir sur le site officiel ↗", localTrack:"Heure locale du circuit", partialLM:"essais, qualifs et Hyperpole pas encore publiés", locale:"fr-FR", timeMode:"Fuseau horaire", trackTime:"Heure du circuit", myTime:"Mon heure", yourTime:"Ton heure locale", addOne:"Ajouter à mon calendrier", addAll:"Tout ajouter à mon calendrier", calNote:"Enregistré dans le calendrier de ton téléphone à ton heure locale, avec une alerte 15 minutes avant chaque session.", selectAll:"Tout sélectionner", more:"Plus", moreRaces:"Plus de courses", cancel:"Annuler", calHint:"Touche l’icône calendrier à côté d’une session pour l’ajouter — tu pourras alors en sélectionner plusieurs d’un coup. Enregistré à ton heure locale, avec une alerte 15 minutes avant.", selectNone:"Tout désélectionner", pickNone:"Sélectionne les sessions à ajouter", addOneSel:"Ajouter 1 session à mon calendrier", addN:"Ajouter {n} sessions à mon calendrier", subscribe:"S’abonner au calendrier", incomplete:"Horaire incomplet — pas encore publié :", cat_fp:"essais libres", cat_q:"qualifs", cat_r:"course", subTitle:"S’abonner au calendrier de Louis", subIntro:"Choisis ce que tu veux dans ton téléphone. Les week-ends de course sont toujours inclus, et les nouveaux horaires s’ajoutent automatiquement.", sub_all:"Tout", sub_all_d:"Essais libres, qualifs et courses", sub_qr:"Qualifs & courses", sub_qr_d:"Sans les essais libres", sub_r:"Courses seulement", sub_r_d:"Juste les départs des courses", subNote:"Tous les week-ends de course et les horaires, mis à jour automatiquement sur ton téléphone."},
+      official:"Voir sur le site officiel ↗", localTrack:"Heure locale du circuit", partialLM:"essais, qualifs et Hyperpole pas encore publiés", locale:"fr-FR", timeMode:"Fuseau horaire", trackTime:"Heure du circuit", myTime:"Mon heure", yourTime:"Ton heure locale", addOne:"Ajouter à mon calendrier", addAll:"Tout ajouter à mon calendrier", calNote:"Enregistré dans le calendrier de ton téléphone à ton heure locale, avec une alerte 15 minutes avant chaque session.", selectAll:"Tout sélectionner", carSpecs:"Fiche technique", more:"Plus", moreRaces:"Plus de courses", cancel:"Annuler", calHint:"Touche l’icône calendrier à côté d’une session pour l’ajouter — tu pourras alors en sélectionner plusieurs d’un coup. Enregistré à ton heure locale, avec une alerte 15 minutes avant.", selectNone:"Tout désélectionner", pickNone:"Sélectionne les sessions à ajouter", addOneSel:"Ajouter 1 session à mon calendrier", addN:"Ajouter {n} sessions à mon calendrier", subscribe:"S’abonner au calendrier", incomplete:"Horaire incomplet — pas encore publié :", cat_fp:"essais libres", cat_q:"qualifs", cat_r:"course", subTitle:"S’abonner au calendrier de Louis", subIntro:"Choisis ce que tu veux dans ton téléphone. Les week-ends de course sont toujours inclus, et les nouveaux horaires s’ajoutent automatiquement.", sub_all:"Tout", sub_all_d:"Essais libres, qualifs et courses", sub_qr:"Qualifs & courses", sub_qr_d:"Sans les essais libres", sub_r:"Courses seulement", sub_r_d:"Juste les départs des courses", subNote:"Tous les week-ends de course et les horaires, mis à jour automatiquement sur ton téléphone."},
 };
 const MONTHS = {en:["January","February","March","April","May","June","July","August","September","October","November","December"],
                 fr:["Janvier","Février","Mars","Avril","Mai","Juin","Juillet","Août","Septembre","Octobre","Novembre","Décembre"]};
@@ -580,12 +599,12 @@ function render(){
       <h2>${MONTHS[LANG][m]}</h2>
       <div class="events">
         ${groups[m].map(ev => { const dl = dateLabel(ev); return `
-          <article class="ev ${ev.series}">
+          <article class="ev ${ev.series}${d(ev.e) < today ? " past" : ""}">
             <div class="date"><b>${dl.big}</b><small>${dl.small}</small></div>
             <div>
               <div class="name">${esc(L(ev.name))}<span class="dur" title="${T("raceLength")}">${CLOCK}${esc(ev.dur)}</span>${ev===nextEv?`<span class="next">${T("next")}</span>`:''}</div>
               <a class="where" href="${mapUrl(ev)}" target="_blank" rel="noopener" title="${T("maps")}"><svg class="pin" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2a7 7 0 0 0-7 7c0 5.2 7 13 7 13s7-7.8 7-13a7 7 0 0 0-7-7zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5z"/></svg>${esc(L(ev.where))}</a>
-              <div class="country-row"><div class="country"><span class="flag" aria-hidden="true">${ev.flag}</span>${esc(L(ev.country))}</div><button class="tt-btn${TIMETABLES[ev.id]?' has':''}" data-i="${EVENTS.indexOf(ev)}" aria-label="${T("schedule")} – ${esc(L(ev.name))}">${TTICON}${T("schedule")}</button></div>
+              <div class="country-row"><div class="country"><span class="flag" aria-hidden="true">${ev.flag}</span>${esc(L(ev.country))}</div><button class="tt-btn${TIMETABLES[ev.id]?' has':''}" data-i="${EVENTS.indexOf(ev)}" aria-label="${T("schedule")} – ${esc(L(ev.name))}">${TTICON}${T("schedule")}</button><button class="car-btn" data-car="${CAR_OF[ev.series]}" aria-label="${T("carSpecs")} – ${esc(CARS[CAR_OF[ev.series]].name)}" title="${T("carSpecs")}">${CARICON}</button></div>
               ${ev.note?`<div class="note">${esc(L(ev.note))}</div>`:''}
             </div>
             <img class="series-logo" src="${LOGO[ev.series]}" alt="${LABEL[ev.series]}">
@@ -709,6 +728,51 @@ document.addEventListener("keydown", e => { if (e.key === "Escape" && !document.
 document.getElementById("cd").addEventListener("click", e => { const b = e.target.closest(".cd-tt"); if (b) openTT(+b.dataset.i); });
 document.getElementById("list").addEventListener("click", e => { const b = e.target.closest(".tt-btn"); if (b) openTT(+b.dataset.i); });
 
+
+// ===== Voitures / Cars =====
+const CARICON = '<svg viewBox="0 0 24 24" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="1.9" stroke-linejoin="round" stroke-linecap="round"><path d="M2.5 15.5v-2.2c0-.7.4-1.3 1-1.6l3.2-1.5 2.4-2.6c.4-.4.9-.6 1.4-.6h4.8c.6 0 1.1.3 1.4.7l2.2 2.8 2.1.7c.9.3 1.5 1.1 1.5 2v2.3c0 .5-.4.9-.9.9h-1.3M6.2 16.4H15.6"/><circle cx="4.6" cy="16.4" r="1.7"/><circle cx="17.3" cy="16.4" r="1.7"/></g></svg>';
+const CAR_OF = {alms:"oreca-alms", elms:"oreca-elms", imsa:"cadillac", lm:"cadillac"};
+const ORECA_SPECS = [
+  [{en:"Chassis",fr:"Châssis"}, "Oreca 07"],
+  [{en:"Engine",fr:"Moteur"}, {en:"Gibson GK428 4.2 L V8 (90°), naturally aspirated",fr:"Gibson GK428 V8 4,2 L (90°), atmosphérique"}],
+  [{en:"Power",fr:"Puissance"}, {en:"~603 bhp (450 kW) at 9,000 rpm",fr:"~603 ch (450 kW) à 9 000 tr/min"}],
+  [{en:"Torque",fr:"Couple"}, "555 Nm (409 lb-ft)"],
+  [{en:"Weight",fr:"Poids"}, "930 kg"],
+  [{en:"Wheelbase",fr:"Empattement"}, "3,005 mm (118.3 in)"],
+  [{en:"Length / Width / Height",fr:"Longueur / Largeur / Hauteur"}, "4,745 / 1,895 / 1,045 mm"],
+  [{en:"Fuel tank",fr:"Réservoir"}, "75 L"],
+  [{en:"Brakes",fr:"Freins"}, {en:"AP Racing ventilated carbon discs, Brembo 6-piston monobloc calipers",fr:"Disques carbone ventilés AP Racing, étriers monobloc Brembo 6 pistons"}],
+];
+const CARS = {
+  "oreca-alms": {name:"ORECA 07 – LMP2", series:"alms", img:"car-alms.jpg", specs:ORECA_SPECS},
+  "oreca-elms": {name:"ORECA 07 – LMP2", series:"elms", img:"car-elms.jpg", specs:ORECA_SPECS},
+  "cadillac": {name:"Cadillac V-Series.R", series:"imsa", img:"car-cadillac.jpg", sub:"IMSA · Le Mans", specs:[
+    [{en:"Engine",fr:"Moteur"}, {en:"Cadillac LMC55R 5.5 L V8 (90°), DOHC, naturally aspirated — GM Performance and Racing",fr:"Cadillac LMC55R V8 5,5 L (90°), DOHC, atmosphérique — GM Performance and Racing"}],
+    [{en:"Hybrid system",fr:"Système hybride"}, {en:"Standard LMDh unit",fr:"Unité LMDh standard"}],
+    [{en:"Power",fr:"Puissance"}, {en:"~670–680 hp",fr:"~670–680 ch"}],
+    [{en:"Redline",fr:"Régime max"}, {en:"~8,500–8,900 rpm",fr:"~8 500–8 900 tr/min"}],
+    [{en:"Gearbox",fr:"Boîte de vitesses"}, {en:"7-speed sequential",fr:"Séquentielle 7 rapports"}],
+    [{en:"Drivetrain",fr:"Transmission"}, {en:"Rear-wheel drive",fr:"Propulsion (roues arrière)"}],
+    [{en:"Minimum weight",fr:"Poids minimum"}, "~1,030 kg (2,271 lb)"],
+    [{en:"Dimensions",fr:"Dimensions"}, {en:"~5,080–5,100 mm long × 2,000 mm wide",fr:"~5 080–5 100 mm × 2 000 mm de large"}],
+    [{en:"Tyres",fr:"Pneus"}, "Michelin"],
+  ]},
+};
+function fillCar(id){
+  const c = CARS[id];
+  document.getElementById("tt-hdc").innerHTML = `<div class="tt-head ${c.series}"><h3 id="tt-title">${esc(c.name)}</h3><small>${c.sub || LABEL[c.series]}</small></div>`;
+  document.getElementById("tt-body").innerHTML = `<img class="car-img" src="${c.img}" alt="${esc(c.name)}"><div class="car-specs">${c.specs.map(([k,v]) => `<div class="spec"><span>${esc(L(k))}</span><span>${esc(L(v))}</span></div>`).join("")}</div>`;
+  document.getElementById("tt-ft").innerHTML = "";
+}
+document.getElementById("list").addEventListener("click", e => {
+  const b = e.target.closest(".car-btn"); if (!b) return;
+  ttOpenIdx = "car:" + b.dataset.car; document.querySelector(".tt-modal").classList.remove("selecting");
+  fillCar(b.dataset.car); ttLastFocus = b;
+  if (document.getElementById("tt").hidden) lockScroll(); document.getElementById("tt").hidden = false;
+  document.getElementById("tt-body").scrollTop = 0; requestAnimationFrame(updateCue);
+  const img = document.querySelector("#tt-body .car-img"); if (img) img.addEventListener("load", updateCue, {once:true});
+  document.getElementById("tt-close").focus();
+});
 // Where to watch
 const WATCH = {alms:"https://www.youtube.com/@AsianLeMansSeries", imsa:"https://www.youtube.com/IMSAOfficial", elms:"https://plus.fiawec.com/en", lm:"https://plus.fiawec.com/en"};
 const watchBtn = ev => `<div class="cd-btns"><button class="watch ghost cd-tt" data-i="${EVENTS.indexOf(ev)}">${TTICON}${T("schedule")}</button><a class="watch" href="${WATCH[ev.series]}" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M7 4.5v15l13-7.5z"/></svg>${T("watch")}</a></div>`;
@@ -753,7 +817,7 @@ function applyLang(lang){
   document.querySelectorAll("[data-i18n-alt]").forEach(el => el.alt = T(el.dataset.i18nAlt));
   document.querySelectorAll(".lang button").forEach(b => b.setAttribute("aria-pressed", b.dataset.lang===lang ? "true" : "false"));
   render(); cdKey = null; tick();
-  if (ttOpenIdx === "sub") fillSub(); else if (ttOpenIdx !== null) fillTT(ttOpenIdx);
+  if (ttOpenIdx === "sub") fillSub(); else if (typeof ttOpenIdx === "string" && ttOpenIdx.startsWith("car:")) fillCar(ttOpenIdx.slice(4)); else if (ttOpenIdx !== null) fillTT(ttOpenIdx);
   if (ttOpenIdx !== null) requestAnimationFrame(updateCue);
 }
 document.querySelectorAll(".lang button").forEach(b => b.addEventListener("click", () => {
