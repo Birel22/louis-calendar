@@ -107,14 +107,27 @@
   .tt-mode button{font:600 13px 'Barlow',sans-serif;color:var(--muted);background:none;border:0;border-radius:999px;padding:5px 12px;cursor:pointer}
   .tt-mode button[aria-pressed="true"]{background:var(--text);color:var(--bg)}
   .tt-mode button:focus-visible,.cal-add:focus-visible,.cal-all:focus-visible{outline:2px solid var(--lm);outline-offset:2px}
-  .tt-row{grid-template-columns:56px 1fr 26px !important;align-items:center}
+  .tt-row{grid-template-columns:56px 1fr 30px !important;align-items:center}
   .tt-row.pick{cursor:pointer;position:relative}
   .tt-row.pick input{position:absolute;opacity:0;width:1px;height:1px}
   .tt-row .box{width:22px;height:22px;border-radius:6px;border:1.5px solid #555963;display:flex;align-items:center;justify-content:center;transition:background .15s,border-color .15s}
   .tt-row input:checked + .box{background:var(--text);border-color:var(--text)}
   .tt-row input:checked + .box::after{content:"";width:6px;height:11px;border:solid var(--bg);border-width:0 2.5px 2.5px 0;transform:rotate(45deg) translate(-1px,-1px)}
   .tt-row input:focus-visible + .box{outline:2px solid var(--lm);outline-offset:2px}
-  .pick-bar{display:flex;justify-content:flex-end;margin:2px 0 4px}
+  .pick-bar{display:flex;justify-content:space-between;margin:2px 0 4px}
+  .pick-cancel{font:600 13px 'Barlow',sans-serif;color:var(--muted);background:none;border:0;cursor:pointer;padding:4px 0}
+  .pick-cancel:hover{color:var(--text)}
+  .pick-area{display:none}
+  #tt-body.selecting .pick-area{display:block}
+  .tt-row .box{display:none}
+  #tt-body.selecting .tt-row .box{display:flex}
+  #tt-body.selecting .tt-row .cal-ico{display:none}
+  .tt-row.pick{cursor:default}
+  #tt-body.selecting .tt-row.pick{cursor:pointer}
+  .cal-ico{display:flex;align-items:center;justify-content:center;width:30px;height:30px;margin-right:-4px;border-radius:8px;border:1px solid var(--line);background:none;color:var(--muted);cursor:pointer;transition:color .15s,border-color .15s}
+  .cal-ico:hover{color:var(--text);border-color:#4a4d56}
+  .cal-ico:focus-visible{outline:2px solid var(--lm);outline-offset:2px}
+  .cal-ico svg{width:16px;height:16px}
   .pick-toggle{font:600 13px 'Barlow',sans-serif;color:var(--muted);background:none;border:0;text-decoration:underline;text-underline-offset:3px;cursor:pointer;padding:4px 0}
   .pick-toggle:hover{color:var(--text)}
   .cal-all{width:100%;border:0;cursor:pointer}
@@ -273,13 +286,13 @@ const I18N = {
       disclaimer:"Dates are provisional and subject to change.", close:"Close", next:"Next", raceLength:"Race length", maps:"View on Google Maps",
       schedule:"Schedule", watch:"Where to watch", nextRace:"Next race", now:"Right now", racing:"Racing 🏁", season:"Season 2027", over:"Over — thanks for the support!",
       days:"days", hours:"hours", min:"min", sec:"sec", notYet:"Not published yet.<br>Schedules usually come out a few weeks before the race.",
-      official:"View on the official website ↗", localTrack:"Local track time", partialLM:"practice, qualifying and Hyperpole not published yet", locale:"en-GB", timeMode:"Time zone", trackTime:"Track time", myTime:"My time", yourTime:"Your local time", addOne:"Add to my calendar", addAll:"Add all to my calendar", calNote:"Saved in your phone’s calendar in your own time zone, with an alert 15 minutes before each session.", selectAll:"Select all", selectNone:"Clear selection", pickNone:"Select sessions to add", addOneSel:"Add 1 session to my calendar", addN:"Add {n} sessions to my calendar", subscribe:"Subscribe to the calendar", incomplete:"Incomplete schedule — not published yet:", cat_fp:"free practice", cat_q:"qualifying", cat_r:"race", subTitle:"Subscribe to Louis’s calendar", subIntro:"Pick what you want on your phone. Race weekends are always included, and new schedules are added automatically.", sub_all:"Everything", sub_all_d:"Free practice, qualifying and races", sub_qr:"Qualifying & races", sub_qr_d:"No free practice", sub_r:"Races only", sub_r_d:"Just the race starts", subNote:"All race weekends and schedules, updated automatically on your phone."},
+      official:"View on the official website ↗", localTrack:"Local track time", partialLM:"practice, qualifying and Hyperpole not published yet", locale:"en-GB", timeMode:"Time zone", trackTime:"Track time", myTime:"My time", yourTime:"Your local time", addOne:"Add to my calendar", addAll:"Add all to my calendar", calNote:"Saved in your phone’s calendar in your own time zone, with an alert 15 minutes before each session.", selectAll:"Select all", cancel:"Cancel", calHint:"Tap the calendar icon next to a session to add it — you can then select several at once. Saved in your own time zone, with an alert 15 minutes before.", selectNone:"Clear selection", pickNone:"Select sessions to add", addOneSel:"Add 1 session to my calendar", addN:"Add {n} sessions to my calendar", subscribe:"Subscribe to the calendar", incomplete:"Incomplete schedule — not published yet:", cat_fp:"free practice", cat_q:"qualifying", cat_r:"race", subTitle:"Subscribe to Louis’s calendar", subIntro:"Pick what you want on your phone. Race weekends are always included, and new schedules are added automatically.", sub_all:"Everything", sub_all_d:"Free practice, qualifying and races", sub_qr:"Qualifying & races", sub_qr_d:"No free practice", sub_r:"Races only", sub_r_d:"Just the race starts", subNote:"All race weekends and schedules, updated automatically on your phone."},
   fr:{docTitle:"Louis calendrier 2027", eyebrow:"Louis Delétraz · Saison 2027", title:"Louis <em>calendrier 2027</em>", photoAlt:"Louis Delétraz à côté de sa Cadillac Hypercar",
       socials:"Réseaux sociaux", website:"Site web", partners:"Partenaires", filterBy:"Filtrer par championnat", all:"Tout", lmFull:"24 Heures du Mans",
       disclaimer:"Dates indicatives, susceptibles de changer.", close:"Fermer", next:"Prochaine", raceLength:"Durée de course", maps:"Voir sur Google Maps",
       schedule:"Horaires", watch:"Où regarder", nextRace:"Prochaine course", now:"En ce moment", racing:"En course 🏁", season:"Saison 2027", over:"Terminée — merci pour le soutien !",
       days:"jours", hours:"heures", min:"min", sec:"sec", notYet:"Pas encore publié.<br>Les horaires sortent en général quelques semaines avant la course.",
-      official:"Voir sur le site officiel ↗", localTrack:"Heure locale du circuit", partialLM:"essais, qualifs et Hyperpole pas encore publiés", locale:"fr-FR", timeMode:"Fuseau horaire", trackTime:"Heure du circuit", myTime:"Mon heure", yourTime:"Ton heure locale", addOne:"Ajouter à mon calendrier", addAll:"Tout ajouter à mon calendrier", calNote:"Enregistré dans le calendrier de ton téléphone à ton heure locale, avec une alerte 15 minutes avant chaque session.", selectAll:"Tout sélectionner", selectNone:"Tout désélectionner", pickNone:"Sélectionne les sessions à ajouter", addOneSel:"Ajouter 1 session à mon calendrier", addN:"Ajouter {n} sessions à mon calendrier", subscribe:"S’abonner au calendrier", incomplete:"Horaire incomplet — pas encore publié :", cat_fp:"essais libres", cat_q:"qualifs", cat_r:"course", subTitle:"S’abonner au calendrier de Louis", subIntro:"Choisis ce que tu veux dans ton téléphone. Les week-ends de course sont toujours inclus, et les nouveaux horaires s’ajoutent automatiquement.", sub_all:"Tout", sub_all_d:"Essais libres, qualifs et courses", sub_qr:"Qualifs & courses", sub_qr_d:"Sans les essais libres", sub_r:"Courses seulement", sub_r_d:"Juste les départs des courses", subNote:"Tous les week-ends de course et les horaires, mis à jour automatiquement sur ton téléphone."},
+      official:"Voir sur le site officiel ↗", localTrack:"Heure locale du circuit", partialLM:"essais, qualifs et Hyperpole pas encore publiés", locale:"fr-FR", timeMode:"Fuseau horaire", trackTime:"Heure du circuit", myTime:"Mon heure", yourTime:"Ton heure locale", addOne:"Ajouter à mon calendrier", addAll:"Tout ajouter à mon calendrier", calNote:"Enregistré dans le calendrier de ton téléphone à ton heure locale, avec une alerte 15 minutes avant chaque session.", selectAll:"Tout sélectionner", cancel:"Annuler", calHint:"Touche l’icône calendrier à côté d’une session pour l’ajouter — tu pourras alors en sélectionner plusieurs d’un coup. Enregistré à ton heure locale, avec une alerte 15 minutes avant.", selectNone:"Tout désélectionner", pickNone:"Sélectionne les sessions à ajouter", addOneSel:"Ajouter 1 session à mon calendrier", addN:"Ajouter {n} sessions à mon calendrier", subscribe:"S’abonner au calendrier", incomplete:"Horaire incomplet — pas encore publié :", cat_fp:"essais libres", cat_q:"qualifs", cat_r:"course", subTitle:"S’abonner au calendrier de Louis", subIntro:"Choisis ce que tu veux dans ton téléphone. Les week-ends de course sont toujours inclus, et les nouveaux horaires s’ajoutent automatiquement.", sub_all:"Tout", sub_all_d:"Essais libres, qualifs et courses", sub_qr:"Qualifs & courses", sub_qr_d:"Sans les essais libres", sub_r:"Courses seulement", sub_r_d:"Juste les départs des courses", subNote:"Tous les week-ends de course et les horaires, mis à jour automatiquement sur ton téléphone."},
 };
 const MONTHS = {en:["January","February","March","April","May","June","July","August","September","October","November","December"],
                 fr:["Janvier","Février","Mars","Avril","Mai","Juin","Juillet","Août","Septembre","Octobre","Novembre","Décembre"]};
@@ -600,10 +613,10 @@ function fillTT(i){
       let dl = dt.toLocaleDateString(T("locale"), {timeZone:zone, weekday:"short", day:"numeric", month:"short"}); dl = dl.charAt(0).toUpperCase()+dl.slice(1);
       const tm = dt.toLocaleTimeString(T("locale"), {timeZone:zone, hour:"2-digit", minute:"2-digit", hourCycle:"h23"});
       let g = days[days.length-1]; if (!g || g.label !== dl) { g = {label:dl, rows:[]}; days.push(g); }
-      g.rows.push(`<label class="tt-row pick"><span>${tm}</span><span>${esc(L(s.label))}</span><input type="checkbox" class="tt-pick" data-k="${k}" aria-label="${esc(L(s.label))}"><i class="box" aria-hidden="true"></i></label>`);
+      g.rows.push(`<label class="tt-row pick"><span>${tm}</span><span>${esc(L(s.label))}</span><input type="checkbox" class="tt-pick" data-k="${k}" aria-label="${esc(L(s.label))}"><i class="box" aria-hidden="true"></i><button type="button" class="cal-ico" data-k="${k}" aria-label="${T("addOne")} – ${esc(L(s.label))}" title="${T("addOne")}">${CALICON}</button></label>`);
     });
     html += days.map(g => `<div class="tt-day"><b>${esc(g.label)}</b>${g.rows.join("")}</div>`).join("");
-    html += `<div class="pick-bar"><button type="button" class="pick-toggle">${T("selectAll")}</button></div><button type="button" class="cal-all" disabled>${CALICON}<span class="cal-all-txt">${T("pickNone")}</span></button><p class="tt-note">${T("calNote")}</p>`;
+    html += `<div class="pick-area"><div class="pick-bar"><button type="button" class="pick-cancel">${T("cancel")}</button><button type="button" class="pick-toggle">${T("selectAll")}</button></div><button type="button" class="cal-all" disabled>${CALICON}<span class="cal-all-txt">${T("pickNone")}</span></button></div><p class="tt-note">${T("calHint")}</p>`;
   } else {
     html += `<p class="tt-empty">${T("notYet")}</p>`;
   }
@@ -629,6 +642,10 @@ function updatePickUI(){
 document.getElementById("tt-body").addEventListener("change", e => { if (e.target.classList.contains("tt-pick")) updatePickUI(); });
 document.getElementById("tt-body").addEventListener("click", e => {
   const box = document.getElementById("tt-body");
+  const ico = e.target.closest(".cal-ico");
+  if (ico){ e.preventDefault(); box.classList.add("selecting"); const c = box.querySelector(`.tt-pick[data-k="${ico.dataset.k}"]`); if (c) c.checked = true; updatePickUI(); return; }
+  if (!box.classList.contains("selecting") && e.target.closest(".tt-row.pick")){ e.preventDefault(); return; }
+  if (e.target.closest(".pick-cancel")){ box.classList.remove("selecting"); box.querySelectorAll(".tt-pick").forEach(c => c.checked = false); updatePickUI(); return; }
   if (e.target.closest(".pick-toggle")){ const all=[...box.querySelectorAll(".tt-pick")]; const on=all.every(c=>c.checked); all.forEach(c=>c.checked=!on); updatePickUI(); return; }
   if (e.target.closest(".cal-all")){
     const ev = EVENTS[ttOpenIdx], t = TIMETABLES[ev.id];
@@ -643,14 +660,14 @@ document.getElementById("tt-body").addEventListener("click", e => {
   fillTT(ttOpenIdx);
   keep.forEach(k => { const c = document.querySelector(`#tt-body .tt-pick[data-k="${k}"]`); if (c) c.checked = true; }); updatePickUI();
 });
-function openTT(i){ ttOpenIdx = i; fillTT(i); ttLastFocus = document.activeElement; document.getElementById("tt").hidden = false; document.getElementById("tt-close").focus(); }
+function openTT(i){ ttOpenIdx = i; document.getElementById("tt-body").classList.remove("selecting"); fillTT(i); ttLastFocus = document.activeElement; document.getElementById("tt").hidden = false; document.getElementById("tt-close").focus(); }
 function closeTT(){ ttOpenIdx = null; document.getElementById("tt").hidden = true; if (ttLastFocus) ttLastFocus.focus(); }
 const SUBS = [["sub_all","sub_all_d","louis-2027.ics"],["sub_qr","sub_qr_d","louis-2027-quali-race.ics"],["sub_r","sub_r_d","louis-2027-races.ics"]];
 function fillSub(){
   document.getElementById("tt-body").innerHTML = `<div class="tt-head lm"><h3 id="tt-title">${T("subTitle")}</h3></div><p class="tt-empty" style="padding-top:0">${T("subIntro")}</p>`
     + SUBS.map(([t,dsc,f]) => `<a class="sub-opt" href="webcal://birel22.github.io/louis-calendar/${f}"><span><b>${T(t)}</b><small>${T(dsc)}</small></span><span class="arr" aria-hidden="true">›</span></a>`).join("");
 }
-document.getElementById("sub-open").addEventListener("click", () => { ttOpenIdx = "sub"; fillSub(); ttLastFocus = document.activeElement; document.getElementById("tt").hidden = false; document.getElementById("tt-close").focus(); });
+document.getElementById("sub-open").addEventListener("click", () => { ttOpenIdx = "sub"; document.getElementById("tt-body").classList.remove("selecting"); fillSub(); ttLastFocus = document.activeElement; document.getElementById("tt").hidden = false; document.getElementById("tt-close").focus(); });
 document.getElementById("tt").addEventListener("click", e => { if (e.target.id === "tt") closeTT(); });
 document.getElementById("tt-close").addEventListener("click", closeTT);
 document.addEventListener("keydown", e => { if (e.key === "Escape" && !document.getElementById("tt").hidden) closeTT(); });
@@ -659,7 +676,7 @@ document.getElementById("list").addEventListener("click", e => { const b = e.tar
 
 // Where to watch
 const WATCH = {alms:"https://www.youtube.com/@AsianLeMansSeries", imsa:"https://www.youtube.com/IMSAOfficial", elms:"https://plus.fiawec.com/en", lm:"https://plus.fiawec.com/en"};
-const watchBtn = ev => `<div class="cd-btns"><a class="watch" href="${WATCH[ev.series]}" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M7 4.5v15l13-7.5z"/></svg>${T("watch")}</a><button class="watch ghost cd-tt" data-i="${EVENTS.indexOf(ev)}">${TTICON}${T("schedule")}</button></div>`;
+const watchBtn = ev => `<div class="cd-btns"><button class="watch ghost cd-tt" data-i="${EVENTS.indexOf(ev)}">${TTICON}${T("schedule")}</button><a class="watch" href="${WATCH[ev.series]}" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M7 4.5v15l13-7.5z"/></svg>${T("watch")}</a></div>`;
 
 // Countdown
 let cdKey = null;
