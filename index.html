@@ -621,12 +621,8 @@ document.getElementById("tt-body").addEventListener("click", e => {
   if (e.target.closest(".cal-all")){
     const ev = EVENTS[ttOpenIdx], t = TIMETABLES[ev.id];
     const ks = [...box.querySelectorAll(".tt-pick:checked")].map(c => +c.dataset.k); if (!ks.length) return;
-    const ics = buildICS(ev, t, ks);
-    const ios = /iPad|iPhone|iPod/.test(navigator.userAgent) || (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1);
-    if (ios){ window.location.href = "data:text/calendar;charset=utf-8," + encodeURIComponent(ics); return; }
-    const url = URL.createObjectURL(new Blob([ics], {type:"text/calendar;charset=utf-8"}));
-    const a = document.createElement("a"); a.href = url; a.download = `${ev.id}-2027.ics`; document.body.appendChild(a); a.click(); a.remove();
-    setTimeout(() => URL.revokeObjectURL(url), 4000);
+    const mask = ks.reduce((m, k) => m | (1 << k), 0);
+    window.location.href = ICS_BASE + `ics/${ev.id}-m${mask}.ics`;
     return;
   }
   const b = e.target.closest(".tt-mode button"); if (!b) return;

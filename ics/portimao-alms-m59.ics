@@ -1,0 +1,76 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Louis Deletraz//Calendar 2027//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+BEGIN:VEVENT
+UID:portimao-alms-0-2027@louisdeletraz-calendar
+DTSTAMP:20261121T004546Z
+DTSTART:20270219T101000Z
+DTEND:20270219T114000Z
+SUMMARY:ALMS Portimão – Free Practice 1
+LOCATION:Autódromo Internacional do Algarve\, Portimão\, Portugal
+DESCRIPTION:Louis Delétraz · ALMS Portimão · https://www.asianlemansseries.com/en/race/4-hours-of-portimao-by-alms-2027
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:ALMS Portimão – Free Practice 1
+TRIGGER:-PT15M
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:portimao-alms-1-2027@louisdeletraz-calendar
+DTSTAMP:20261121T004546Z
+DTSTART:20270219T133000Z
+DTEND:20270219T150000Z
+SUMMARY:ALMS Portimão – Free Practice 2
+LOCATION:Autódromo Internacional do Algarve\, Portimão\, Portugal
+DESCRIPTION:Louis Delétraz · ALMS Portimão · https://www.asianlemansseries.com/en/race/4-hours-of-portimao-by-alms-2027
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:ALMS Portimão – Free Practice 2
+TRIGGER:-PT15M
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:portimao-alms-3-2027@louisdeletraz-calendar
+DTSTAMP:20261121T004546Z
+DTSTART:20270219T162500Z
+DTEND:20270219T164000Z
+SUMMARY:ALMS Portimão – Qualifying 2 – GT3
+LOCATION:Autódromo Internacional do Algarve\, Portimão\, Portugal
+DESCRIPTION:Louis Delétraz · ALMS Portimão · https://www.asianlemansseries.com/en/race/4-hours-of-portimao-by-alms-2027
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:ALMS Portimão – Qualifying 2 – GT3
+TRIGGER:-PT15M
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:portimao-alms-4-2027@louisdeletraz-calendar
+DTSTAMP:20261121T004546Z
+DTSTART:20270219T165000Z
+DTEND:20270219T170500Z
+SUMMARY:ALMS Portimão – Qualifying 1 – Hypercar & LMP2
+LOCATION:Autódromo Internacional do Algarve\, Portimão\, Portugal
+DESCRIPTION:Louis Delétraz · ALMS Portimão · https://www.asianlemansseries.com/en/race/4-hours-of-portimao-by-alms-2027
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:ALMS Portimão – Qualifying 1 – Hypercar & LMP2
+TRIGGER:-PT15M
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:portimao-alms-5-2027@louisdeletraz-calendar
+DTSTAMP:20261121T004546Z
+DTSTART:20270219T171000Z
+DTEND:20270219T172500Z
+SUMMARY:ALMS Portimão – Qualifying 2 – Hypercar & LMP2
+LOCATION:Autódromo Internacional do Algarve\, Portimão\, Portugal
+DESCRIPTION:Louis Delétraz · ALMS Portimão · https://www.asianlemansseries.com/en/race/4-hours-of-portimao-by-alms-2027
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:ALMS Portimão – Qualifying 2 – Hypercar & LMP2
+TRIGGER:-PT15M
+END:VALARM
+END:VEVENT
+END:VCALENDAR

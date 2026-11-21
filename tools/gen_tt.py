@@ -37,14 +37,15 @@ def vevent(eid,i,ev,sess):
 def cal(events):
     return "\r\n".join(["BEGIN:VCALENDAR","VERSION:2.0","PRODID:-//Louis Deletraz//Calendar 2027//EN","CALSCALE:GREGORIAN","METHOD:PUBLISH",*events,"END:VCALENDAR"])+"\r\n"
 import os
+import shutil
+shutil.rmtree("/home/claude/louis-calendar/ics", ignore_errors=True)
 os.makedirs("/home/claude/louis-calendar/ics", exist_ok=True)
 js = {}
 for eid,ev in EV.items():
-    allv=[]
-    for i,s in enumerate(ev["s"]):
-        v=vevent(eid,i,ev,s); allv.append(v)
-        open(f"/home/claude/louis-calendar/ics/{eid}-{i}.ics","w",newline="").write(cal([v]))
-    open(f"/home/claude/louis-calendar/ics/{eid}-all.ics","w",newline="").write(cal(allv))
+    vs=[vevent(eid,i,ev,s) for i,s in enumerate(ev["s"])]
+    # un fichier par combinaison de sessions (bit k = session k) -> "ajouter la sélection"
+    for mask in range(1, 1 << len(vs)):
+        open(f"/home/claude/louis-calendar/ics/{eid}-m{mask}.ics","w",newline="").write(cal([v for k,v in enumerate(vs) if mask >> k & 1]))
     js[eid]={"src":ev["src"],"tz":ev["tz"],**({"partial":ev["partial"]} if "partial" in ev else {}),
              "title":ev["title"],"loc":ev["loc"],
              "sessions":[{"date":d,"time":t,"label":SESS[k][0],"min":SESS[k][1],"utc":utc(d,t,ev["tz"]).strftime("%Y-%m-%dT%H:%M:%SZ")} for d,t,k in ev["s"]]}

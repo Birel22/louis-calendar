@@ -1,0 +1,90 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Louis Deletraz//Calendar 2027//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+BEGIN:VEVENT
+UID:jerez-0-2027@louisdeletraz-calendar
+DTSTAMP:20261121T004546Z
+DTSTART:20270115T091000Z
+DTEND:20270115T104000Z
+SUMMARY:ALMS Jerez – Free Practice 1
+LOCATION:Circuito de Jerez – Ángel Nieto\, Jerez de la Frontera\, Spain
+DESCRIPTION:Louis Delétraz · ALMS Jerez · https://www.asianlemansseries.com/en/race/4-hours-of-jerez-by-alms-2027
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:ALMS Jerez – Free Practice 1
+TRIGGER:-PT15M
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:jerez-1-2027@louisdeletraz-calendar
+DTSTAMP:20261121T004546Z
+DTSTART:20270115T123000Z
+DTEND:20270115T140000Z
+SUMMARY:ALMS Jerez – Free Practice 2
+LOCATION:Circuito de Jerez – Ángel Nieto\, Jerez de la Frontera\, Spain
+DESCRIPTION:Louis Delétraz · ALMS Jerez · https://www.asianlemansseries.com/en/race/4-hours-of-jerez-by-alms-2027
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:ALMS Jerez – Free Practice 2
+TRIGGER:-PT15M
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:jerez-2-2027@louisdeletraz-calendar
+DTSTAMP:20261121T004546Z
+DTSTART:20270115T150500Z
+DTEND:20270115T152000Z
+SUMMARY:ALMS Jerez – Qualifying 1 – GT3
+LOCATION:Circuito de Jerez – Ángel Nieto\, Jerez de la Frontera\, Spain
+DESCRIPTION:Louis Delétraz · ALMS Jerez · https://www.asianlemansseries.com/en/race/4-hours-of-jerez-by-alms-2027
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:ALMS Jerez – Qualifying 1 – GT3
+TRIGGER:-PT15M
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:jerez-3-2027@louisdeletraz-calendar
+DTSTAMP:20261121T004546Z
+DTSTART:20270115T152500Z
+DTEND:20270115T154000Z
+SUMMARY:ALMS Jerez – Qualifying 2 – GT3
+LOCATION:Circuito de Jerez – Ángel Nieto\, Jerez de la Frontera\, Spain
+DESCRIPTION:Louis Delétraz · ALMS Jerez · https://www.asianlemansseries.com/en/race/4-hours-of-jerez-by-alms-2027
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:ALMS Jerez – Qualifying 2 – GT3
+TRIGGER:-PT15M
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:jerez-4-2027@louisdeletraz-calendar
+DTSTAMP:20261121T004546Z
+DTSTART:20270115T155000Z
+DTEND:20270115T160500Z
+SUMMARY:ALMS Jerez – Qualifying 1 – Hypercar & LMP2
+LOCATION:Circuito de Jerez – Ángel Nieto\, Jerez de la Frontera\, Spain
+DESCRIPTION:Louis Delétraz · ALMS Jerez · https://www.asianlemansseries.com/en/race/4-hours-of-jerez-by-alms-2027
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:ALMS Jerez – Qualifying 1 – Hypercar & LMP2
+TRIGGER:-PT15M
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:jerez-6-2027@louisdeletraz-calendar
+DTSTAMP:20261121T004546Z
+DTSTART:20270116T124500Z
+DTEND:20270116T164500Z
+SUMMARY:ALMS Jerez – Race 1
+LOCATION:Circuito de Jerez – Ángel Nieto\, Jerez de la Frontera\, Spain
+DESCRIPTION:Louis Delétraz · ALMS Jerez · https://www.asianlemansseries.com/en/race/4-hours-of-jerez-by-alms-2027
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:ALMS Jerez – Race 1
+TRIGGER:-PT15M
+END:VALARM
+END:VEVENT
+END:VCALENDAR
