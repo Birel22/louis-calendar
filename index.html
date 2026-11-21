@@ -238,11 +238,11 @@
   [hidden]{display:none!important}
 
   @media (max-width:360px){ .tt-btn{font-size:0;gap:0;padding:4px 8px} .tt-btn svg{width:14px;height:14px} .country-row{gap:8px !important} }
-  @media (max-width:620px) and (max-height:620px){ .hero{min-height:214px !important} .hero h1{font-size:32px !important} .partners{padding:8px 12px !important} }
+  @media (max-width:620px) and (max-height:620px){ .hero{min-height:210px !important} .hero h1{font-size:32px !important} .partners{padding:8px 12px !important} }
   @media (max-width:620px){
     .wrap{padding:12px 12px 48px}
     .stats{grid-template-columns:repeat(2,1fr)}
-    .hero{min-height:268px;align-items:flex-end;margin-bottom:10px;border-radius:14px}
+    .hero{min-height:268px;min-height:clamp(210px, calc(100svh - 352px), 560px);align-items:flex-end;margin-bottom:10px;border-radius:14px}
     .hero .photo{object-position:70% 28%;height:100%}
     .hero::after{background:linear-gradient(180deg,rgba(13,14,17,.7) 0%,rgba(13,14,17,0) 30%),linear-gradient(0deg,rgba(13,14,17,.95) 0%,rgba(13,14,17,.55) 45%,rgba(13,14,17,0) 75%)}
     .hero h1{font-size:38px;margin:2px 0 0}
