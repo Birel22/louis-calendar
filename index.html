@@ -76,8 +76,6 @@
   .page-cue svg{width:14px;height:14px;animation:cue-bob 1.6s ease-in-out infinite}
   .page-cue.gone{display:none}
   .chip-lm{height:14px;width:auto;display:block}
-  .chip[aria-pressed="true"] .chip-lm{filter:invert(1)}
-  .chip .ic{font-size:16px;line-height:1}
   .lm24{display:inline-flex;align-items:center;justify-content:center;font:800 10px 'Barlow Condensed';letter-spacing:0;background:var(--lm);color:#1a1206;border-radius:4px;height:18px;padding:0 4px}
   header{position:relative;padding-bottom:28px;border-bottom:1px solid var(--line);margin-bottom:28px}
   .stripe{display:flex;gap:6px;margin-bottom:22px}
@@ -92,12 +90,22 @@
   .stat b{display:block;font-family:'Barlow Condensed';font-size:34px;font-weight:700;line-height:1}
   .stat small{color:var(--muted);font-size:13px}
 
-  .filters{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:26px}
-  .chip{font:600 14px 'Barlow Condensed';letter-spacing:.1em;text-transform:uppercase;color:var(--muted);background:transparent;border:1px solid var(--line);border-radius:999px;padding:8px 16px;cursor:pointer;display:flex;align-items:center;gap:8px;transition:border-color .15s,color .15s,background .15s}
-  .chip i{width:8px;height:8px;border-radius:50%;display:inline-block}
-  .chip:hover{color:var(--text);border-color:#454852}
-  .chip[aria-pressed="true"]{color:var(--bg);background:var(--text);border-color:var(--text)}
-  .chip:focus-visible{outline:2px solid var(--lm);outline-offset:2px}
+  .filter-dd{position:relative;display:inline-block;margin-bottom:24px;z-index:20}
+  .ff-btn{display:inline-flex;align-items:center;gap:10px;font:600 15px 'Barlow',sans-serif;color:var(--text);background:var(--panel);border:1px solid var(--line);border-radius:999px;padding:9px 14px 9px 16px;cursor:pointer;transition:border-color .15s}
+  .ff-btn:hover,.ff-btn[aria-expanded="true"]{border-color:#4a4d56}
+  .ff-btn:focus-visible{outline:2px solid var(--lm);outline-offset:2px}
+  .ff-pre{color:var(--muted);font-size:13px;font-weight:500}
+  .ff-cur{display:inline-flex;align-items:center;gap:8px;font:700 15px 'Barlow Condensed';letter-spacing:.1em;text-transform:uppercase}
+  .ff-chev{width:16px;height:16px;color:var(--muted);transition:transform .15s}
+  .ff-btn[aria-expanded="true"] .ff-chev{transform:rotate(180deg)}
+  .ff-menu{position:absolute;top:calc(100% + 6px);left:0;min-width:100%;list-style:none;margin:0;padding:6px;background:var(--panel2);border:1px solid #3a3d45;border-radius:14px;box-shadow:0 14px 34px rgba(0,0,0,.5)}
+  .ff-menu[hidden]{display:none}
+  .ff-menu li{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:9px;cursor:pointer;font:700 15px 'Barlow Condensed';letter-spacing:.1em;text-transform:uppercase;color:var(--muted);outline:none;white-space:nowrap}
+  .ff-menu li:hover,.ff-menu li:focus{background:rgba(255,255,255,.07);color:var(--text)}
+  .ff-menu li[aria-selected="true"]{color:var(--text)}
+  .ff-menu li[aria-selected="true"]::after{content:"";margin-left:auto;width:6px;height:11px;border:solid var(--text);border-width:0 2px 2px 0;transform:rotate(45deg) translate(-2px,-2px)}
+  .ff-menu .ic,.ff-cur .ic{font-size:16px;line-height:1}
+  @media (prefers-reduced-motion: reduce){.ff-chev{transition:none}}
 
   .month{display:grid;grid-template-columns:92px 1fr;gap:16px;margin-bottom:18px}
   .month h2{font-family:'Barlow Condensed';font-weight:700;font-size:20px;text-transform:uppercase;letter-spacing:.08em;color:var(--dim);padding-top:16px;position:sticky;top:0;align-self:start}
@@ -325,12 +333,15 @@
     <div class="countdown" id="cd"></div>
   </header>
 
-  <div class="filters" role="group" data-i18n-aria="filterBy" aria-label="Filter by championship">
-    <button class="chip" data-f="all" aria-pressed="true"><span class="ic" aria-hidden="true">🌍</span><span data-i18n="all">All</span></button>
-    <button class="chip" data-f="imsa" aria-pressed="false"><span class="ic" aria-hidden="true">🇺🇸</span>IMSA</button>
-    <button class="chip" data-f="elms" aria-pressed="false"><span class="ic" aria-hidden="true">🇪🇺</span>ELMS</button>
-    <button class="chip" data-f="alms" aria-pressed="false"><span class="ic" aria-hidden="true">🌏</span>ALMS</button>
-    <button class="chip" data-f="lm" aria-pressed="false"><img class="chip-lm" src="lg-lm.png" alt="" aria-hidden="true">Le Mans</button>
+  <div class="filter-dd" id="ffdd">
+    <button type="button" class="ff-btn" id="ff-btn" aria-haspopup="listbox" aria-expanded="false" aria-controls="ff-menu"><span class="ff-pre" data-i18n="champ">Championship</span><span class="ff-cur" id="ff-cur"></span><svg class="ff-chev" viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" d="M6 9l6 6 6-6"/></svg></button>
+    <ul class="ff-menu" id="ff-menu" role="listbox" data-i18n-aria="filterBy" aria-label="Filter by championship" hidden>
+      <li role="option" tabindex="-1" data-f="all" aria-selected="true"><span class="ic" aria-hidden="true">🌍</span><span data-i18n="all">All</span></li>
+      <li role="option" tabindex="-1" data-f="imsa" aria-selected="false"><span class="ic" aria-hidden="true">🇺🇸</span>IMSA</li>
+      <li role="option" tabindex="-1" data-f="elms" aria-selected="false"><span class="ic" aria-hidden="true">🇪🇺</span>ELMS</li>
+      <li role="option" tabindex="-1" data-f="alms" aria-selected="false"><span class="ic" aria-hidden="true">🌏</span>ALMS</li>
+      <li role="option" tabindex="-1" data-f="lm" aria-selected="false"><img class="chip-lm" src="lg-lm.png" alt="" aria-hidden="true">Le Mans</li>
+    </ul>
   </div>
 
   <main id="list"></main>
@@ -363,13 +374,13 @@ const I18N = {
       disclaimer:"Dates are provisional and subject to change.", close:"Close", next:"Next", raceLength:"Race length", maps:"View on Google Maps",
       schedule:"Schedule", watch:"Where to watch", nextRace:"Next race", now:"Right now", racing:"Racing 🏁", season:"Season 2027", over:"Over — thanks for the support!",
       days:"days", hours:"hours", min:"min", sec:"sec", notYet:"Not published yet.<br>Schedules usually come out a few weeks before the race.",
-      official:"View on the official website ↗", localTrack:"Local track time", partialLM:"practice, qualifying and Hyperpole not published yet", locale:"en-GB", timeMode:"Time zone", trackTime:"Track time", myTime:"My time", yourTime:"Your local time", addOne:"Add to my calendar", addAll:"Add all to my calendar", calNote:"Saved in your phone’s calendar in your own time zone, with an alert 15 minutes before each session.", selectAll:"Select all", nextSession:"Next session", endsAround:"Ends around", then:"then", yourTimeShort:"your time", carSpecs:"Car specs", more:"More", moreRaces:"More races", cancel:"Cancel", calHint:"Tap the calendar icon next to a session to add it — you can then select several at once. Saved in your own time zone, with an alert 15 minutes before.", selectNone:"Clear selection", pickNone:"Select sessions to add", addOneSel:"Add 1 session to my calendar", addN:"Add {n} sessions to my calendar", subscribe:"Subscribe to the calendar", incomplete:"Incomplete schedule — not published yet:", cat_fp:"free practice", cat_q:"qualifying", cat_r:"race", subTitle:"Subscribe to Louis’s calendar", subIntro:"Pick what you want on your phone. Race weekends are always included, and new schedules are added automatically.", sub_all:"Everything", sub_all_d:"Free practice, qualifying and races", sub_qr:"Qualifying & races", sub_qr_d:"No free practice", sub_r:"Races only", sub_r_d:"Just the race starts", subNote:"All race weekends and schedules, updated automatically on your phone."},
+      official:"View on the official website ↗", localTrack:"Local track time", partialLM:"practice, qualifying and Hyperpole not published yet", locale:"en-GB", timeMode:"Time zone", trackTime:"Track time", myTime:"My time", yourTime:"Your local time", addOne:"Add to my calendar", addAll:"Add all to my calendar", calNote:"Saved in your phone’s calendar in your own time zone, with an alert 15 minutes before each session.", selectAll:"Select all", champ:"Championship", nextSession:"Next session", endsAround:"Ends around", then:"then", yourTimeShort:"your time", carSpecs:"Car specs", more:"More", moreRaces:"More races", cancel:"Cancel", calHint:"Tap the calendar icon next to a session to add it — you can then select several at once. Saved in your own time zone, with an alert 15 minutes before.", selectNone:"Clear selection", pickNone:"Select sessions to add", addOneSel:"Add 1 session to my calendar", addN:"Add {n} sessions to my calendar", subscribe:"Subscribe to the calendar", incomplete:"Incomplete schedule — not published yet:", cat_fp:"free practice", cat_q:"qualifying", cat_r:"race", subTitle:"Subscribe to Louis’s calendar", subIntro:"Pick what you want on your phone. Race weekends are always included, and new schedules are added automatically.", sub_all:"Everything", sub_all_d:"Free practice, qualifying and races", sub_qr:"Qualifying & races", sub_qr_d:"No free practice", sub_r:"Races only", sub_r_d:"Just the race starts", subNote:"All race weekends and schedules, updated automatically on your phone."},
   fr:{docTitle:"Louis calendrier 2027", eyebrow:"Louis Delétraz · Saison 2027", title:"Louis <em>calendrier 2027</em>", photoAlt:"Louis Delétraz à côté de sa Cadillac Hypercar",
       socials:"Réseaux sociaux", website:"Site web", partners:"Partenaires", filterBy:"Filtrer par championnat", all:"Tout", lmFull:"24 Heures du Mans",
       disclaimer:"Dates indicatives, susceptibles de changer.", close:"Fermer", next:"Prochaine", raceLength:"Durée de course", maps:"Voir sur Google Maps",
       schedule:"Horaires", watch:"Où regarder", nextRace:"Prochaine course", now:"En ce moment", racing:"En course 🏁", season:"Saison 2027", over:"Terminée — merci pour le soutien !",
       days:"jours", hours:"heures", min:"min", sec:"sec", notYet:"Pas encore publié.<br>Les horaires sortent en général quelques semaines avant la course.",
-      official:"Voir sur le site officiel ↗", localTrack:"Heure locale du circuit", partialLM:"essais, qualifs et Hyperpole pas encore publiés", locale:"fr-FR", timeMode:"Fuseau horaire", trackTime:"Heure du circuit", myTime:"Mon heure", yourTime:"Ton heure locale", addOne:"Ajouter à mon calendrier", addAll:"Tout ajouter à mon calendrier", calNote:"Enregistré dans le calendrier de ton téléphone à ton heure locale, avec une alerte 15 minutes avant chaque session.", selectAll:"Tout sélectionner", nextSession:"Prochaine session", endsAround:"Fin vers", then:"puis", yourTimeShort:"ton heure", carSpecs:"Fiche technique", more:"Plus", moreRaces:"Plus de courses", cancel:"Annuler", calHint:"Touche l’icône calendrier à côté d’une session pour l’ajouter — tu pourras alors en sélectionner plusieurs d’un coup. Enregistré à ton heure locale, avec une alerte 15 minutes avant.", selectNone:"Tout désélectionner", pickNone:"Sélectionne les sessions à ajouter", addOneSel:"Ajouter 1 session à mon calendrier", addN:"Ajouter {n} sessions à mon calendrier", subscribe:"S’abonner au calendrier", incomplete:"Horaire incomplet — pas encore publié :", cat_fp:"essais libres", cat_q:"qualifs", cat_r:"course", subTitle:"S’abonner au calendrier de Louis", subIntro:"Choisis ce que tu veux dans ton téléphone. Les week-ends de course sont toujours inclus, et les nouveaux horaires s’ajoutent automatiquement.", sub_all:"Tout", sub_all_d:"Essais libres, qualifs et courses", sub_qr:"Qualifs & courses", sub_qr_d:"Sans les essais libres", sub_r:"Courses seulement", sub_r_d:"Juste les départs des courses", subNote:"Tous les week-ends de course et les horaires, mis à jour automatiquement sur ton téléphone."},
+      official:"Voir sur le site officiel ↗", localTrack:"Heure locale du circuit", partialLM:"essais, qualifs et Hyperpole pas encore publiés", locale:"fr-FR", timeMode:"Fuseau horaire", trackTime:"Heure du circuit", myTime:"Mon heure", yourTime:"Ton heure locale", addOne:"Ajouter à mon calendrier", addAll:"Tout ajouter à mon calendrier", calNote:"Enregistré dans le calendrier de ton téléphone à ton heure locale, avec une alerte 15 minutes avant chaque session.", selectAll:"Tout sélectionner", champ:"Championnat", nextSession:"Prochaine session", endsAround:"Fin vers", then:"puis", yourTimeShort:"ton heure", carSpecs:"Fiche technique", more:"Plus", moreRaces:"Plus de courses", cancel:"Annuler", calHint:"Touche l’icône calendrier à côté d’une session pour l’ajouter — tu pourras alors en sélectionner plusieurs d’un coup. Enregistré à ton heure locale, avec une alerte 15 minutes avant.", selectNone:"Tout désélectionner", pickNone:"Sélectionne les sessions à ajouter", addOneSel:"Ajouter 1 session à mon calendrier", addN:"Ajouter {n} sessions à mon calendrier", subscribe:"S’abonner au calendrier", incomplete:"Horaire incomplet — pas encore publié :", cat_fp:"essais libres", cat_q:"qualifs", cat_r:"course", subTitle:"S’abonner au calendrier de Louis", subIntro:"Choisis ce que tu veux dans ton téléphone. Les week-ends de course sont toujours inclus, et les nouveaux horaires s’ajoutent automatiquement.", sub_all:"Tout", sub_all_d:"Essais libres, qualifs et courses", sub_qr:"Qualifs & courses", sub_qr_d:"Sans les essais libres", sub_r:"Courses seulement", sub_r_d:"Juste les départs des courses", subNote:"Tous les week-ends de course et les horaires, mis à jour automatiquement sur ton téléphone."},
 };
 const MONTHS = {en:["January","February","March","April","May","June","July","August","September","October","November","December"],
                 fr:["Janvier","Février","Mars","Avril","Mai","Juin","Juillet","Août","Septembre","Octobre","Novembre","Décembre"]};
@@ -382,7 +393,7 @@ const T = k => I18N[LANG][k];
 const L = v => (v && typeof v === "object") ? v[LANG] : v;
 
 // ===== Courses / Races =====
-const US = {en:"United States", fr:"États-Unis"};
+const US = {en:"USA", fr:"USA"};
 const EVENTS = [
   {s:"2027-01-15",e:"2027-01-17",series:"alms",id:"jerez",name:"Jerez",dur:"2 × 4h",where:{en:"Circuito de Jerez – Ángel Nieto · Jerez de la Frontera",fr:"Circuito de Jerez – Ángel Nieto · Jerez de la Frontera"},country:{en:"Spain",fr:"Espagne"},flag:"🇪🇸"},
   {s:"2027-02-19",e:"2027-02-21",series:"alms",id:"portimao-alms",name:"Portimão",dur:"2 × 4h",where:"Autódromo Internacional do Algarve · Portimão",country:"Portugal",flag:"🇵🇹",note:{en:"ALMS finale",fr:"Finale ALMS"}},
@@ -629,10 +640,24 @@ function render(){
       </div>
     </section>`).join("");
 }
-document.querySelectorAll(".chip").forEach(btn => btn.addEventListener("click", () => {
-  document.querySelectorAll(".chip").forEach(b => b.setAttribute("aria-pressed", b===btn ? "true" : "false"));
-  filter = btn.dataset.f; render();
-}));
+// Filtre championnat (menu déroulant)
+const ffBtn = document.getElementById("ff-btn"), ffMenu = document.getElementById("ff-menu");
+const ffOpts = () => [...ffMenu.querySelectorAll("[role=option]")];
+function ffSync(){ const o = ffOpts().find(x => x.dataset.f === filter); document.getElementById("ff-cur").innerHTML = o.innerHTML; ffOpts().forEach(x => x.setAttribute("aria-selected", x.dataset.f === filter ? "true" : "false")); }
+function ffOpen(){ ffMenu.hidden = false; ffBtn.setAttribute("aria-expanded","true"); (ffOpts().find(x => x.dataset.f === filter) || ffOpts()[0]).focus(); }
+function ffClose(focusBtn){ ffMenu.hidden = true; ffBtn.setAttribute("aria-expanded","false"); if (focusBtn) ffBtn.focus(); }
+function ffPick(o){ filter = o.dataset.f; ffSync(); render(); ffClose(true); }
+ffBtn.addEventListener("click", () => ffMenu.hidden ? ffOpen() : ffClose(false));
+ffMenu.addEventListener("click", e => { const o = e.target.closest("[role=option]"); if (o) ffPick(o); });
+ffMenu.addEventListener("keydown", e => {
+  const os = ffOpts(), i = os.indexOf(document.activeElement);
+  if (e.key === "ArrowDown"){ e.preventDefault(); os[Math.min(os.length-1, i+1)].focus(); }
+  else if (e.key === "ArrowUp"){ e.preventDefault(); os[Math.max(0, i-1)].focus(); }
+  else if (e.key === "Enter" || e.key === " "){ e.preventDefault(); if (i >= 0) ffPick(os[i]); }
+  else if (e.key === "Escape" || e.key === "Tab"){ ffClose(e.key === "Escape"); }
+});
+ffBtn.addEventListener("keydown", e => { if (e.key === "ArrowDown"){ e.preventDefault(); ffOpen(); } });
+document.addEventListener("click", e => { if (!ffMenu.hidden && !e.target.closest("#ffdd")) ffClose(false); });
 
 // Timetable dialog
 let ttLastFocus = null, ttOpenIdx = null;
@@ -875,7 +900,7 @@ function applyLang(lang){
   document.querySelectorAll("[data-i18n-aria]").forEach(el => { el.setAttribute("aria-label", T(el.dataset.i18nAria)); if (el.hasAttribute("title")) el.title = T(el.dataset.i18nAria); });
   document.querySelectorAll("[data-i18n-alt]").forEach(el => el.alt = T(el.dataset.i18nAlt));
   document.querySelectorAll(".lang button").forEach(b => b.setAttribute("aria-pressed", b.dataset.lang===lang ? "true" : "false"));
-  render(); cdKey = null; tick();
+  render(); ffSync(); cdKey = null; tick();
   if (ttOpenIdx === "sub") fillSub(); else if (typeof ttOpenIdx === "string" && ttOpenIdx.startsWith("car:")) fillCar(ttOpenIdx.slice(4)); else if (ttOpenIdx !== null) fillTT(ttOpenIdx);
   if (ttOpenIdx !== null) requestAnimationFrame(updateCue);
 }
