@@ -280,6 +280,11 @@
   .dur{display:inline-flex;align-items:center;gap:4px;font:600 13px 'Barlow',sans-serif;letter-spacing:0;text-transform:none;color:var(--muted);margin-left:10px;vertical-align:3px;white-space:nowrap}
   .dur svg{width:13px;height:13px}
   .cd-car .car-ic{width:34px;height:12px;flex:none}
+  .countdown{position:relative}
+  .countdown .cd-share{position:absolute;top:-1px;right:-1px;width:38px;height:32px;padding:0 0 1px 1px;border:1px solid var(--line);border-radius:0 12px 0 12px;background:linear-gradient(225deg,rgba(255,255,255,.055),rgba(255,255,255,.015));color:#7d808a;transition:color .15s,background .15s,border-color .15s}
+  .countdown .cd-share:hover,.countdown .cd-share:focus-visible{color:var(--c,var(--lm));border-color:#3a3d45;background:linear-gradient(225deg,rgba(255,255,255,.09),rgba(255,255,255,.03))}
+  .countdown .cd-share svg{width:14px;height:14px}
+  @media (min-width:621px){ #cd.countdown{padding-top:34px;padding-bottom:22px} }
   .cd-btns{display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end}
   .watch.ghost{background:transparent;color:var(--text);border:1px solid #4a4d56}
   .next{display:inline-block;font:700 11px 'Barlow Condensed';letter-spacing:.14em;text-transform:uppercase;background:var(--text);color:var(--bg);border-radius:3px;padding:2px 6px;margin-left:8px;vertical-align:3px}
@@ -929,7 +934,7 @@ document.addEventListener("click", e => {
 const SHAREICON = '<svg viewBox="0 0 24 24" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3.5v11M8 7.5l4-4 4 4"/><path d="M6 11.5v7a1.5 1.5 0 0 0 1.5 1.5h9a1.5 1.5 0 0 0 1.5-1.5v-7"/></g></svg>';
 const PAGE_URL = "https://birel22.github.io/louis-calendar/";
 function toast(msg){ let t=document.getElementById("toast"); if(!t){ t=document.createElement("div"); t.id="toast"; t.setAttribute("role","status"); document.body.appendChild(t); } t.textContent=msg; t.classList.add("on"); clearTimeout(t._h); t._h=setTimeout(()=>t.classList.remove("on"),2200); }
-document.getElementById("list").addEventListener("click", async e => {
+document.addEventListener("click", async e => {
   const b = e.target.closest(".share-btn"); if (!b) return;
   const ev = EVENTS[+b.dataset.i], dl = dateLabel(ev);
   const text = shareMsg(ev, dl);
@@ -976,7 +981,7 @@ function seasonProgress(){
 }
 // Where to watch
 const WATCH = {alms:"https://www.youtube.com/@AsianLeMansSeries", imsa:"https://www.youtube.com/IMSAOfficial", elms:"https://plus.fiawec.com/en", lm:"https://plus.fiawec.com/en"};
-const watchBtn = ev => `<div class="cd-btns"><button class="watch ghost cd-tt" data-i="${EVENTS.indexOf(ev)}">${TTICON}${T("schedule")}</button><button class="watch ghost cd-car" data-series="${ev.series}" aria-label="${T("carSpecs")} – ${esc(CARS[CAR_OF[ev.series]].name)}">${CARICON}${T("carShort")}</button><a class="watch" href="${WATCH[ev.series]}" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M7 4.5v15l13-7.5z"/></svg>${T("watch")}</a></div>`;
+const watchBtn = ev => `<button class="share-btn cd-share" data-i="${EVENTS.indexOf(ev)}" aria-label="${T("share")} – ${esc(L(ev.name))}" title="${T("share")}">${SHAREICON}</button><div class="cd-btns"><button class="watch ghost cd-tt" data-i="${EVENTS.indexOf(ev)}">${TTICON}${T("schedule")}</button><button class="watch ghost cd-car" data-series="${ev.series}" aria-label="${T("carSpecs")} – ${esc(CARS[CAR_OF[ev.series]].name)}">${CARICON}${T("carShort")}</button><a class="watch" href="${WATCH[ev.series]}" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M7 4.5v15l13-7.5z"/></svg>${T("watch")}</a></div>`;
 
 // Countdown
 // ===== Horloge (avec mode démo : ?demo=pre | next | live | between | race) =====
