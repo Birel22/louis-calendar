@@ -56,6 +56,22 @@
   .ev.past{opacity:.42;filter:grayscale(.7);transition:opacity .2s}
   .ev.past:hover{opacity:.75}
   .partners-foot{margin:34px 0 0}
+  .live-badge{display:inline-flex;align-items:center;gap:6px;font:800 12px 'Barlow',sans-serif;letter-spacing:.08em;color:#fff;background:#e5322d;border-radius:5px;padding:3px 7px;margin-right:10px;vertical-align:4px}
+  .live-badge i{width:7px;height:7px;border-radius:50%;background:#fff;animation:live-pulse 1.2s ease-in-out infinite}
+  .live-badge.sm{font-size:10px;padding:2px 6px;margin-right:7px;vertical-align:1px}
+  @keyframes live-pulse{0%,100%{opacity:1}50%{opacity:.25}}
+  @media (prefers-reduced-motion: reduce){.live-badge i{animation:none}}
+  .live-line{display:flex !important;align-items:center;flex-wrap:wrap}
+  .cd-sub{display:block;margin-top:6px;font-size:14px;color:var(--muted)}
+  .cd-label .cd-ses{display:inline;font:600 14px 'Barlow',sans-serif;letter-spacing:0;text-transform:none;color:var(--text);margin:0;line-height:inherit}
+  .cd-label .live-badge{color:#fff;font-size:12px}
+  .cd-label .cd-sub, .cd-label .cd-sub *{text-transform:none}
+  body:has(#tt:not([hidden])) .page-cue{display:none}
+  .cd-yt{color:var(--dim);font-size:12px}
+  .tt-row.done{opacity:.38}
+  .tt-row.done span:first-child{text-decoration:line-through;text-decoration-thickness:1px}
+  .tt-row.is-live{background:rgba(229,50,45,.08);border-radius:8px;margin:0 -8px;padding-left:8px;padding-right:8px}
+  .demo-badge{position:fixed;top:10px;left:50%;transform:translateX(-50%);z-index:60;background:#f2d30f;color:#111;font:800 11px 'Barlow',sans-serif;letter-spacing:.1em;padding:4px 10px;border-radius:999px;pointer-events:none}
   .page-cue{position:fixed;left:50%;bottom:calc(14px + env(safe-area-inset-bottom));transform:translateX(-50%) translateY(calc((1 - var(--pc,1)) * 12px));opacity:var(--pc,1);display:flex;align-items:center;gap:6px;font:600 13px 'Barlow',sans-serif;color:var(--text);background:rgba(28,31,37,.9);border:1px solid #3a3d45;border-radius:999px;padding:7px 14px 7px 11px;pointer-events:none;z-index:40;backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);box-shadow:0 6px 20px rgba(0,0,0,.4);transition:opacity .12s linear,transform .12s linear}
   .page-cue svg{width:14px;height:14px;animation:cue-bob 1.6s ease-in-out infinite}
   .page-cue.gone{display:none}
@@ -242,7 +258,7 @@
   @media (max-width:620px){
     .wrap{padding:12px 12px 48px}
     .stats{grid-template-columns:repeat(2,1fr)}
-    .hero{min-height:268px;min-height:clamp(210px, calc(100svh - 352px), 560px);align-items:flex-end;margin-bottom:10px;border-radius:14px}
+    .hero{min-height:268px;min-height:clamp(200px, calc(100svh - 380px), 560px);align-items:flex-end;margin-bottom:10px;border-radius:14px}
     .hero .photo{object-position:70% 28%;height:100%}
     .hero::after{background:linear-gradient(180deg,rgba(13,14,17,.7) 0%,rgba(13,14,17,0) 30%),linear-gradient(0deg,rgba(13,14,17,.95) 0%,rgba(13,14,17,.55) 45%,rgba(13,14,17,0) 75%)}
     .hero h1{font-size:38px;margin:2px 0 0}
@@ -347,13 +363,13 @@ const I18N = {
       disclaimer:"Dates are provisional and subject to change.", close:"Close", next:"Next", raceLength:"Race length", maps:"View on Google Maps",
       schedule:"Schedule", watch:"Where to watch", nextRace:"Next race", now:"Right now", racing:"Racing 🏁", season:"Season 2027", over:"Over — thanks for the support!",
       days:"days", hours:"hours", min:"min", sec:"sec", notYet:"Not published yet.<br>Schedules usually come out a few weeks before the race.",
-      official:"View on the official website ↗", localTrack:"Local track time", partialLM:"practice, qualifying and Hyperpole not published yet", locale:"en-GB", timeMode:"Time zone", trackTime:"Track time", myTime:"My time", yourTime:"Your local time", addOne:"Add to my calendar", addAll:"Add all to my calendar", calNote:"Saved in your phone’s calendar in your own time zone, with an alert 15 minutes before each session.", selectAll:"Select all", carSpecs:"Car specs", more:"More", moreRaces:"More races", cancel:"Cancel", calHint:"Tap the calendar icon next to a session to add it — you can then select several at once. Saved in your own time zone, with an alert 15 minutes before.", selectNone:"Clear selection", pickNone:"Select sessions to add", addOneSel:"Add 1 session to my calendar", addN:"Add {n} sessions to my calendar", subscribe:"Subscribe to the calendar", incomplete:"Incomplete schedule — not published yet:", cat_fp:"free practice", cat_q:"qualifying", cat_r:"race", subTitle:"Subscribe to Louis’s calendar", subIntro:"Pick what you want on your phone. Race weekends are always included, and new schedules are added automatically.", sub_all:"Everything", sub_all_d:"Free practice, qualifying and races", sub_qr:"Qualifying & races", sub_qr_d:"No free practice", sub_r:"Races only", sub_r_d:"Just the race starts", subNote:"All race weekends and schedules, updated automatically on your phone."},
+      official:"View on the official website ↗", localTrack:"Local track time", partialLM:"practice, qualifying and Hyperpole not published yet", locale:"en-GB", timeMode:"Time zone", trackTime:"Track time", myTime:"My time", yourTime:"Your local time", addOne:"Add to my calendar", addAll:"Add all to my calendar", calNote:"Saved in your phone’s calendar in your own time zone, with an alert 15 minutes before each session.", selectAll:"Select all", nextSession:"Next session", endsAround:"Ends around", then:"then", yourTimeShort:"your time", carSpecs:"Car specs", more:"More", moreRaces:"More races", cancel:"Cancel", calHint:"Tap the calendar icon next to a session to add it — you can then select several at once. Saved in your own time zone, with an alert 15 minutes before.", selectNone:"Clear selection", pickNone:"Select sessions to add", addOneSel:"Add 1 session to my calendar", addN:"Add {n} sessions to my calendar", subscribe:"Subscribe to the calendar", incomplete:"Incomplete schedule — not published yet:", cat_fp:"free practice", cat_q:"qualifying", cat_r:"race", subTitle:"Subscribe to Louis’s calendar", subIntro:"Pick what you want on your phone. Race weekends are always included, and new schedules are added automatically.", sub_all:"Everything", sub_all_d:"Free practice, qualifying and races", sub_qr:"Qualifying & races", sub_qr_d:"No free practice", sub_r:"Races only", sub_r_d:"Just the race starts", subNote:"All race weekends and schedules, updated automatically on your phone."},
   fr:{docTitle:"Louis calendrier 2027", eyebrow:"Louis Delétraz · Saison 2027", title:"Louis <em>calendrier 2027</em>", photoAlt:"Louis Delétraz à côté de sa Cadillac Hypercar",
       socials:"Réseaux sociaux", website:"Site web", partners:"Partenaires", filterBy:"Filtrer par championnat", all:"Tout", lmFull:"24 Heures du Mans",
       disclaimer:"Dates indicatives, susceptibles de changer.", close:"Fermer", next:"Prochaine", raceLength:"Durée de course", maps:"Voir sur Google Maps",
       schedule:"Horaires", watch:"Où regarder", nextRace:"Prochaine course", now:"En ce moment", racing:"En course 🏁", season:"Saison 2027", over:"Terminée — merci pour le soutien !",
       days:"jours", hours:"heures", min:"min", sec:"sec", notYet:"Pas encore publié.<br>Les horaires sortent en général quelques semaines avant la course.",
-      official:"Voir sur le site officiel ↗", localTrack:"Heure locale du circuit", partialLM:"essais, qualifs et Hyperpole pas encore publiés", locale:"fr-FR", timeMode:"Fuseau horaire", trackTime:"Heure du circuit", myTime:"Mon heure", yourTime:"Ton heure locale", addOne:"Ajouter à mon calendrier", addAll:"Tout ajouter à mon calendrier", calNote:"Enregistré dans le calendrier de ton téléphone à ton heure locale, avec une alerte 15 minutes avant chaque session.", selectAll:"Tout sélectionner", carSpecs:"Fiche technique", more:"Plus", moreRaces:"Plus de courses", cancel:"Annuler", calHint:"Touche l’icône calendrier à côté d’une session pour l’ajouter — tu pourras alors en sélectionner plusieurs d’un coup. Enregistré à ton heure locale, avec une alerte 15 minutes avant.", selectNone:"Tout désélectionner", pickNone:"Sélectionne les sessions à ajouter", addOneSel:"Ajouter 1 session à mon calendrier", addN:"Ajouter {n} sessions à mon calendrier", subscribe:"S’abonner au calendrier", incomplete:"Horaire incomplet — pas encore publié :", cat_fp:"essais libres", cat_q:"qualifs", cat_r:"course", subTitle:"S’abonner au calendrier de Louis", subIntro:"Choisis ce que tu veux dans ton téléphone. Les week-ends de course sont toujours inclus, et les nouveaux horaires s’ajoutent automatiquement.", sub_all:"Tout", sub_all_d:"Essais libres, qualifs et courses", sub_qr:"Qualifs & courses", sub_qr_d:"Sans les essais libres", sub_r:"Courses seulement", sub_r_d:"Juste les départs des courses", subNote:"Tous les week-ends de course et les horaires, mis à jour automatiquement sur ton téléphone."},
+      official:"Voir sur le site officiel ↗", localTrack:"Heure locale du circuit", partialLM:"essais, qualifs et Hyperpole pas encore publiés", locale:"fr-FR", timeMode:"Fuseau horaire", trackTime:"Heure du circuit", myTime:"Mon heure", yourTime:"Ton heure locale", addOne:"Ajouter à mon calendrier", addAll:"Tout ajouter à mon calendrier", calNote:"Enregistré dans le calendrier de ton téléphone à ton heure locale, avec une alerte 15 minutes avant chaque session.", selectAll:"Tout sélectionner", nextSession:"Prochaine session", endsAround:"Fin vers", then:"puis", yourTimeShort:"ton heure", carSpecs:"Fiche technique", more:"Plus", moreRaces:"Plus de courses", cancel:"Annuler", calHint:"Touche l’icône calendrier à côté d’une session pour l’ajouter — tu pourras alors en sélectionner plusieurs d’un coup. Enregistré à ton heure locale, avec une alerte 15 minutes avant.", selectNone:"Tout désélectionner", pickNone:"Sélectionne les sessions à ajouter", addOneSel:"Ajouter 1 session à mon calendrier", addN:"Ajouter {n} sessions à mon calendrier", subscribe:"S’abonner au calendrier", incomplete:"Horaire incomplet — pas encore publié :", cat_fp:"essais libres", cat_q:"qualifs", cat_r:"course", subTitle:"S’abonner au calendrier de Louis", subIntro:"Choisis ce que tu veux dans ton téléphone. Les week-ends de course sont toujours inclus, et les nouveaux horaires s’ajoutent automatiquement.", sub_all:"Tout", sub_all_d:"Essais libres, qualifs et courses", sub_qr:"Qualifs & courses", sub_qr_d:"Sans les essais libres", sub_r:"Courses seulement", sub_r_d:"Juste les départs des courses", subNote:"Tous les week-ends de course et les horaires, mis à jour automatiquement sur ton téléphone."},
 };
 const MONTHS = {en:["January","February","March","April","May","June","July","August","September","October","November","December"],
                 fr:["Janvier","Février","Mars","Avril","Mai","Juin","Juillet","Août","Septembre","Octobre","Novembre","Décembre"]};
@@ -642,7 +658,8 @@ function fillTT(i){
       let dl = dt.toLocaleDateString(T("locale"), {timeZone:zone, weekday:"short", day:"numeric", month:"short"}); dl = dl.charAt(0).toUpperCase()+dl.slice(1);
       const tm = dt.toLocaleTimeString(T("locale"), {timeZone:zone, hour:"2-digit", minute:"2-digit", hourCycle:"h23"});
       let g = days[days.length-1]; if (!g || g.label !== dl) { g = {label:dl, rows:[]}; days.push(g); }
-      g.rows.push(`<label class="tt-row pick"><span>${tm}</span><span>${esc(L(s.label))}</span><input type="checkbox" class="tt-pick" data-k="${k}" aria-label="${esc(L(s.label))}"><i class="box" aria-hidden="true"></i><button type="button" class="cal-ico" data-k="${k}" aria-label="${T("addOne")} – ${esc(L(s.label))}" title="${T("addOne")}">${CALICON}</button></label>`);
+      const nowT = NOW(), isLive = sesStart(s) <= nowT && nowT < sesEnd(s), isDone = nowT >= sesEnd(s);
+      g.rows.push(`<label class="tt-row pick${isDone ? " done" : ""}${isLive ? " is-live" : ""}"><span>${tm}</span><span>${isLive ? '<span class="live-badge sm"><i></i>LIVE</span>' : ""}${esc(L(s.label))}</span><input type="checkbox" class="tt-pick" data-k="${k}" aria-label="${esc(L(s.label))}"><i class="box" aria-hidden="true"></i><button type="button" class="cal-ico" data-k="${k}" aria-label="${T("addOne")} – ${esc(L(s.label))}" title="${T("addOne")}">${CALICON}</button></label>`);
     });
     html += days.map(g => `<div class="tt-day"><b>${esc(g.label)}</b>${g.rows.join("")}</div>`).join("");
     ft = `<div class="pick-area"><div class="pick-bar"><button type="button" class="pick-cancel">${T("cancel")}</button><button type="button" class="pick-toggle">${T("selectAll")}</button></div><button type="button" class="cal-all" disabled>${CALICON}<span class="cal-all-txt">${T("pickNone")}</span></button></div>`;
@@ -779,33 +796,74 @@ const WATCH = {alms:"https://www.youtube.com/@AsianLeMansSeries", imsa:"https://
 const watchBtn = ev => `<div class="cd-btns"><button class="watch ghost cd-tt" data-i="${EVENTS.indexOf(ev)}">${TTICON}${T("schedule")}</button><a class="watch" href="${WATCH[ev.series]}" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M7 4.5v15l13-7.5z"/></svg>${T("watch")}</a></div>`;
 
 // Countdown
+// ===== Horloge (avec mode démo : ?demo=pre | next | live | between | race) =====
+const DEMO = (() => { try { return new URLSearchParams(location.search).get("demo"); } catch(e){ return null; } })();
+const DEMO_BASE = (() => {
+  const J = id => TIMETABLES[id] && TIMETABLES[id].sessions;
+  const ses = J("jerez"); if (!DEMO || !ses) return null;
+  const at = (i, plusMin) => new Date(new Date(ses[i].utc).getTime() + plusMin*60000);
+  return {pre: at(0, -2*24*60 - 5*60), next: at(0, -95), live: at(0, 20), between: at(0, 100), race: at(6, 75)}[DEMO] || null;
+})();
+const LOAD_T = Date.now();
+const NOW = () => DEMO_BASE ? new Date(DEMO_BASE.getTime() + (Date.now() - LOAD_T)) : new Date();
+const sesStart = s => new Date(s.utc), sesEnd = s => new Date(new Date(s.utc).getTime() + s.min*60000);
+function evDone(ev, now){
+  const t = TIMETABLES[ev.id];
+  if (t) return now >= sesEnd(t.sessions[t.sessions.length-1]);
+  return now >= new Date(d(ev.e).getTime() + 86400000);
+}
+function sessionState(ev, now){
+  const t = TIMETABLES[ev.id]; if (!t) return null;
+  const live = t.sessions.find(s => sesStart(s) <= now && now < sesEnd(s));
+  const next = t.sessions.find(s => sesStart(s) > now);
+  return {live, next};
+}
+const fmtLocal = dt => { let x = dt.toLocaleString(T("locale"), {weekday:"short", hour:"2-digit", minute:"2-digit", hourCycle:"h23"}); return x.charAt(0).toUpperCase()+x.slice(1); };
+const fmtTime = dt => dt.toLocaleTimeString(T("locale"), {hour:"2-digit", minute:"2-digit", hourCycle:"h23"});
 let cdKey = null;
 function tick(){
-  const now = new Date(), cd = document.getElementById("cd");
-  const cur = EVENTS.find(e => d(e.s) <= now && now < new Date(d(e.e).getTime()+86400000));
-  const nxt = EVENTS.find(e => d(e.s) > now);
-  if (cur){
-    const k = LANG+"cur"+cur.id; if (cdKey === k) return; cdKey = k;
-    cd.className = "countdown " + cur.series;
-    cd.innerHTML = `<div class="cd-label"><small>${T("now")}</small><b>${esc(L(cur.name))}</b><span>${cur.flag} ${esc(L(cur.country))} · ${LABEL[cur.series]}</span></div><div class="cd-right"><b style="color:var(--c);font:700 26px 'Barlow Condensed';text-transform:uppercase">${T("racing")}</b>${watchBtn(cur)}</div>`;
+  const now = NOW(), cd = document.getElementById("cd");
+  const ev = EVENTS.find(e => !evDone(e, now));
+  if (!ev){ const k = LANG+"end"; if (cdKey===k) return; cdKey=k; cd.className="countdown"; cd.innerHTML = `<div class="cd-label"><small>${T("season")}</small><b>${T("over")}</b></div>`; return; }
+  const st = sessionState(ev, now);
+  const p = n => String(n).padStart(2,"0");
+  const sub = `${ev.flag} ${esc(L(ev.country))} · ${LABEL[ev.series]} · ${dateLabel(ev).big} ${dateLabel(ev).small}`;
+  // 1) session en cours -> LIVE
+  if (st && st.live){
+    const k = LANG+"live"+ev.id+st.live.utc; if (cdKey === k) return; cdKey = k;
+    cd.className = "countdown " + ev.series;
+    cd.innerHTML = `<div class="cd-label"><small>${esc(L(ev.name))}</small><b class="live-line"><span class="live-badge"><i></i>LIVE</span>${esc(L(st.live.label))}</b><span>${sub}</span><span class="cd-sub">${T("endsAround")} ${fmtTime(sesEnd(st.live))}${st.next ? ` · ${T("then")} ${esc(L(st.next.label))} ${fmtLocal(sesStart(st.next))}` : ""}</span></div><div class="cd-right">${watchBtn(ev)}</div>`;
     return;
   }
-  if (!nxt){ const k = LANG+"end"; if (cdKey===k) return; cdKey=k; cd.className="countdown"; cd.innerHTML = `<div class="cd-label"><small>${T("season")}</small><b>${T("over")}</b></div>`; return; }
-  let t = Math.max(0, d(nxt.s) - now);
+  // 2) compte à rebours : vers la prochaine session si horaire connu, sinon vers le début du week-end
+  const target = st && st.next ? sesStart(st.next) : d(ev.s);
+  const inWeekend = now >= d(ev.s);
+  if (!st && inWeekend){
+    const k = LANG+"cur"+ev.id; if (cdKey === k) return; cdKey = k;
+    cd.className = "countdown " + ev.series;
+    cd.innerHTML = `<div class="cd-label"><small>${T("now")}</small><b>${esc(L(ev.name))}</b><span>${sub}</span></div><div class="cd-right"><b style="color:var(--c);font:700 26px 'Barlow Condensed';text-transform:uppercase">${T("racing")}</b>${watchBtn(ev)}</div>`;
+    return;
+  }
+  let t = Math.max(0, target - now);
   const D = Math.floor(t/86400000); t%=86400000;
   const H = Math.floor(t/3600000); t%=3600000;
   const M = Math.floor(t/60000), Sx = Math.floor((t%60000)/1000);
-  const p = n => String(n).padStart(2,"0");
-  const key = LANG+"nxt"+nxt.id;
+  const key = LANG+"nxt"+ev.id+(st && st.next ? st.next.utc : "");
   if (cdKey === key){
     const set=(u,v)=>{const el=cd.querySelector(`[data-u="${u}"]`); if(el) el.textContent=v;};
     set("d",D); set("h",p(H)); set("m",p(M)); set("s",p(Sx)); return;
   }
   cdKey = key;
-  cd.className = "countdown " + nxt.series;
-  cd.innerHTML = `<div class="cd-label"><small>${T("nextRace")}</small><b>${esc(L(nxt.name))}</b><span>${nxt.flag} ${esc(L(nxt.country))} · ${LABEL[nxt.series]} · ${dateLabel(nxt).big} ${dateLabel(nxt).small}</span></div>
-    <div class="cd-right"><div class="cd-units"><div><b data-u="d">${D}</b><small>${T("days")}</small></div><div><b data-u="h">${p(H)}</b><small>${T("hours")}</small></div><div><b data-u="m">${p(M)}</b><small>${T("min")}</small></div><div><b data-u="s">${p(Sx)}</b><small>${T("sec")}</small></div></div>${watchBtn(nxt)}</div>`;
+  const firstSession = st && st.next && TIMETABLES[ev.id].sessions[0] === st.next;
+  const label = st && st.next ? (firstSession && !inWeekend ? T("nextRace") : T("nextSession")) : T("nextRace");
+  const sesLine = st && st.next ? `<span class="cd-sub"><b class="cd-ses">${esc(L(st.next.label))}</b> — ${fmtLocal(sesStart(st.next))} <span class="cd-yt">(${T("yourTimeShort")})</span></span>` : "";
+  cd.className = "countdown " + ev.series;
+  cd.innerHTML = `<div class="cd-label"><small>${label}</small><b>${esc(L(ev.name))}</b><span>${sub}</span>${sesLine}</div>
+    <div class="cd-right"><div class="cd-units"><div><b data-u="d">${D}</b><small>${T("days")}</small></div><div><b data-u="h">${p(H)}</b><small>${T("hours")}</small></div><div><b data-u="m">${p(M)}</b><small>${T("min")}</small></div><div><b data-u="s">${p(Sx)}</b><small>${T("sec")}</small></div></div>${watchBtn(ev)}</div>`;
 }
+// rafraîchir l'horaire ouvert chaque minute (sessions passées / live)
+setInterval(() => { if (typeof ttOpenIdx === "number" && !document.getElementById("tt").hidden){ const keep=[...document.querySelectorAll("#tt-body .tt-pick:checked")].map(c=>c.dataset.k); const st=document.getElementById("tt-body").scrollTop; fillTT(ttOpenIdx); keep.forEach(k=>{const c=document.querySelector(`#tt-body .tt-pick[data-k="${k}"]`); if(c) c.checked=true;}); document.getElementById("tt-body").scrollTop=st; updatePickUI(); } }, 60000);
+if (DEMO_BASE){ const b = document.createElement("div"); b.className = "demo-badge"; b.textContent = "DEMO · " + DEMO; document.body.appendChild(b); }
 
 // Apply language
 function applyLang(lang){
