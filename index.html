@@ -119,7 +119,12 @@
   .stat b{display:block;font-family:'Barlow Condensed';font-size:34px;font-weight:700;line-height:1}
   .stat small{color:var(--muted);font-size:13px}
 
-  .filter-dd{position:sticky;top:8px;z-index:20;margin:0 0 6px;display:flex;justify-content:flex-start}
+  .filter-dd{position:sticky;top:8px;z-index:20;margin:0 0 6px;display:flex;justify-content:space-between;align-items:center;gap:12px}
+  .season-prog{flex:none;display:flex;flex-direction:column;align-items:flex-end;gap:5px;padding:4px 10px;border-radius:10px;background:rgba(13,14,17,.82);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px)}
+  .season-prog b{font:600 12px 'Barlow',sans-serif;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+  .season-prog b span{color:var(--dim)}
+  .season-prog i{display:block;width:76px;height:3px;border-radius:2px;background:var(--line);position:relative;overflow:hidden}
+  .season-prog i::after{content:"";position:absolute;inset:0 auto 0 0;width:max(var(--p), 4px);background:var(--text);border-radius:2px}
   .ff-btn{max-width:100%;display:inline-flex;align-items:center;gap:8px;font:inherit;color:var(--text);background:rgba(13,14,17,.82);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border:1px solid var(--line);border-radius:999px;padding:6px 10px 6px 12px;cursor:pointer;text-align:left;transition:border-color .15s,box-shadow .15s}
   .ff-btn:hover,.ff-btn[aria-expanded="true"]{border-color:#4a4d56}
   .ff-btn[aria-expanded="true"]{box-shadow:0 10px 30px rgba(0,0,0,.45)}
@@ -146,7 +151,7 @@
   @media (prefers-reduced-motion: reduce){.ff-chev{transition:none}}
 
   .month{display:grid;grid-template-columns:92px 1fr;gap:16px;margin-bottom:18px}
-  .month h2{font-family:'Barlow Condensed';font-weight:700;font-size:20px;text-transform:uppercase;letter-spacing:.08em;color:var(--dim);padding-top:16px;position:sticky;top:0;align-self:start}
+  .month h2{font:600 12px 'Barlow',sans-serif;text-transform:uppercase;letter-spacing:.2em;color:var(--dim);padding-top:18px;position:sticky;top:56px;align-self:start}
   .events{display:flex;flex-direction:column;gap:10px}
 
   .ev{display:grid;grid-template-columns:86px 1fr auto;align-items:center;gap:16px;background:var(--panel);border:1px solid var(--line);border-left:4px solid var(--c);border-radius:10px;padding:14px 16px}
@@ -320,7 +325,8 @@
     .partners{padding:10px 12px}
     .partners .p-cad{height:26px} .partners .p-cnx{height:14px} .partners .p-ao{height:22px}
     .month{grid-template-columns:1fr;gap:8px}
-    .month h2{position:static;padding-top:6px}
+    .month h2{position:static;padding:10px 0 0 2px}
+    .month{gap:6px}
     .ev{grid-template-columns:70px 1fr;gap:12px}
     .date b{font-size:22px}
     .name{font-size:20px}
@@ -372,6 +378,7 @@
 
   <div class="filter-dd" id="ffdd">
     <button type="button" class="ff-btn" id="ff-btn" aria-haspopup="listbox" aria-expanded="false" aria-controls="ff-menu"><span class="ff-pre" data-i18n="filter">Filter</span><span class="ff-cur" id="ff-cur"></span><svg class="ff-chev" viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" d="M6 9l6 6 6-6"/></svg></button>
+    <div class="season-prog" id="season-prog" aria-live="polite"></div>
     <ul class="ff-menu" id="ff-menu" role="listbox" data-i18n-aria="filterBy" aria-label="Filter by championship" hidden>
       <li role="option" tabindex="-1" data-f="all" aria-selected="true"><span class="ff-logo"><svg class="ff-all" viewBox="0 0 24 24" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="1.8"><rect x="4" y="4" width="6.5" height="6.5" rx="1.5"/><rect x="13.5" y="4" width="6.5" height="6.5" rx="1.5"/><rect x="4" y="13.5" width="6.5" height="6.5" rx="1.5"/><rect x="13.5" y="13.5" width="6.5" height="6.5" rx="1.5"/></g></svg></span><span class="ff-name" data-i18n="allChamps"></span></li>
       <li role="option" tabindex="-1" data-f="imsa" aria-selected="false"><span class="ff-logo"><img src="lg-imsa.png" alt=""></span><span class="ff-name" data-i18n="n_imsa"></span></li>
@@ -411,13 +418,13 @@ const I18N = {
       disclaimer:"Dates are provisional and subject to change.", close:"Close", next:"Next", raceLength:"Race length", maps:"View on Google Maps",
       schedule:"Schedule", watch:"Where to watch", nextRace:"Next race", now:"Right now", racing:"Racing 🏁", season:"Season 2027", over:"Over — thanks for the support!",
       days:"days", hours:"hours", min:"min", sec:"sec", notYet:"Not published yet.<br>Schedules usually come out a few weeks before the race.",
-      official:"View on the official website ↗", localTrack:"Local track time", partialLM:"practice, qualifying and Hyperpole not published yet", locale:"en-GB", timeMode:"Time zone", trackTime:"Track time", myTime:"My time", yourTime:"Your local time", addOne:"Add to my calendar", addAll:"Add all to my calendar", calNote:"Saved in your phone’s calendar in your own time zone, with an alert 15 minutes before each session.", selectAll:"Select all", share:"Share", shareText:"Follow Louis at {race}, {dates} 🏁", copied:"Link copied", filter:"Filter", allChamps:"All races", n_imsa:"IMSA WeatherTech Championship", n_elms:"European Le Mans Series", n_alms:"Asian Le Mans Series", n_lm:"Le Mans 24 Hours", nextSession:"Next session", endsAround:"Ends around", then:"then", yourTimeShort:"your time", carSpecs:"Car specs", more:"More", moreRaces:"More races", cancel:"Cancel", calHint:"Tap the calendar icon next to a session to add it — you can then select several at once. Saved in your own time zone, with an alert 15 minutes before.", selectNone:"Clear selection", pickNone:"Select sessions to add", addOneSel:"Add 1 session to my calendar", addN:"Add {n} sessions to my calendar", subscribe:"Subscribe to the calendar", incomplete:"Incomplete schedule — not published yet:", cat_fp:"free practice", cat_q:"qualifying", cat_r:"race", subTitle:"Subscribe to Louis’s calendar", subIntro:"Pick what you want on your phone. Race weekends are always included, and new schedules are added automatically.", sub_all:"Everything", sub_all_d:"Free practice, qualifying and races", sub_qr:"Qualifying & races", sub_qr_d:"No free practice", sub_r:"Races only", sub_r_d:"Just the race starts", subNote:"All race weekends and schedules, updated automatically on your phone."},
+      official:"View on the official website ↗", localTrack:"Local track time", partialLM:"practice, qualifying and Hyperpole not published yet", locale:"en-GB", timeMode:"Time zone", trackTime:"Track time", myTime:"My time", yourTime:"Your local time", addOne:"Add to my calendar", addAll:"Add all to my calendar", calNote:"Saved in your phone’s calendar in your own time zone, with an alert 15 minutes before each session.", selectAll:"Select all", raceWord:"Race", seasonDone:"Season complete", share:"Share", shareText:"Follow Louis at {race}, {dates} 🏁", copied:"Link copied", filter:"Filter", allChamps:"All races", n_imsa:"IMSA WeatherTech Championship", n_elms:"European Le Mans Series", n_alms:"Asian Le Mans Series", n_lm:"Le Mans 24 Hours", nextSession:"Next session", endsAround:"Ends around", then:"then", yourTimeShort:"your time", carSpecs:"Car specs", more:"More", moreRaces:"More races", cancel:"Cancel", calHint:"Tap the calendar icon next to a session to add it — you can then select several at once. Saved in your own time zone, with an alert 15 minutes before.", selectNone:"Clear selection", pickNone:"Select sessions to add", addOneSel:"Add 1 session to my calendar", addN:"Add {n} sessions to my calendar", subscribe:"Subscribe to the calendar", incomplete:"Incomplete schedule — not published yet:", cat_fp:"free practice", cat_q:"qualifying", cat_r:"race", subTitle:"Subscribe to Louis’s calendar", subIntro:"Pick what you want on your phone. Race weekends are always included, and new schedules are added automatically.", sub_all:"Everything", sub_all_d:"Free practice, qualifying and races", sub_qr:"Qualifying & races", sub_qr_d:"No free practice", sub_r:"Races only", sub_r_d:"Just the race starts", subNote:"All race weekends and schedules, updated automatically on your phone."},
   fr:{docTitle:"Louis Race Hub", eyebrow:"Louis Delétraz · Saison 2027", title:"Louis <em>Race Hub</em>", photoAlt:"Louis Delétraz à côté de sa Cadillac Hypercar",
       socials:"Réseaux sociaux", website:"Site web", partners:"Partenaires", filterBy:"Filtrer par championnat", all:"Tout", lmFull:"24 Heures du Mans",
       disclaimer:"Dates indicatives, susceptibles de changer.", close:"Fermer", next:"Prochaine", raceLength:"Durée de course", maps:"Voir sur Google Maps",
       schedule:"Horaires", watch:"Où regarder", nextRace:"Prochaine course", now:"En ce moment", racing:"En course 🏁", season:"Saison 2027", over:"Terminée — merci pour le soutien !",
       days:"jours", hours:"heures", min:"min", sec:"sec", notYet:"Pas encore publié.<br>Les horaires sortent en général quelques semaines avant la course.",
-      official:"Voir sur le site officiel ↗", localTrack:"Heure locale du circuit", partialLM:"essais, qualifs et Hyperpole pas encore publiés", locale:"fr-FR", timeMode:"Fuseau horaire", trackTime:"Heure du circuit", myTime:"Mon heure", yourTime:"Ton heure locale", addOne:"Ajouter à mon calendrier", addAll:"Tout ajouter à mon calendrier", calNote:"Enregistré dans le calendrier de ton téléphone à ton heure locale, avec une alerte 15 minutes avant chaque session.", selectAll:"Tout sélectionner", share:"Partager", shareText:"Suis Louis à {race}, {dates} 🏁", copied:"Lien copié", filter:"Filtre", allChamps:"Toutes les courses", n_imsa:"IMSA WeatherTech Championship", n_elms:"European Le Mans Series", n_alms:"Asian Le Mans Series", n_lm:"24 Heures du Mans", nextSession:"Prochaine session", endsAround:"Fin vers", then:"puis", yourTimeShort:"ton heure", carSpecs:"Fiche technique", more:"Plus", moreRaces:"Plus de courses", cancel:"Annuler", calHint:"Touche l’icône calendrier à côté d’une session pour l’ajouter — tu pourras alors en sélectionner plusieurs d’un coup. Enregistré à ton heure locale, avec une alerte 15 minutes avant.", selectNone:"Tout désélectionner", pickNone:"Sélectionne les sessions à ajouter", addOneSel:"Ajouter 1 session à mon calendrier", addN:"Ajouter {n} sessions à mon calendrier", subscribe:"S’abonner au calendrier", incomplete:"Horaire incomplet — pas encore publié :", cat_fp:"essais libres", cat_q:"qualifs", cat_r:"course", subTitle:"S’abonner au calendrier de Louis", subIntro:"Choisis ce que tu veux dans ton téléphone. Les week-ends de course sont toujours inclus, et les nouveaux horaires s’ajoutent automatiquement.", sub_all:"Tout", sub_all_d:"Essais libres, qualifs et courses", sub_qr:"Qualifs & courses", sub_qr_d:"Sans les essais libres", sub_r:"Courses seulement", sub_r_d:"Juste les départs des courses", subNote:"Tous les week-ends de course et les horaires, mis à jour automatiquement sur ton téléphone."},
+      official:"Voir sur le site officiel ↗", localTrack:"Heure locale du circuit", partialLM:"essais, qualifs et Hyperpole pas encore publiés", locale:"fr-FR", timeMode:"Fuseau horaire", trackTime:"Heure du circuit", myTime:"Mon heure", yourTime:"Ton heure locale", addOne:"Ajouter à mon calendrier", addAll:"Tout ajouter à mon calendrier", calNote:"Enregistré dans le calendrier de ton téléphone à ton heure locale, avec une alerte 15 minutes avant chaque session.", selectAll:"Tout sélectionner", raceWord:"Course", seasonDone:"Saison terminée", share:"Partager", shareText:"Suis Louis à {race}, {dates} 🏁", copied:"Lien copié", filter:"Filtre", allChamps:"Toutes les courses", n_imsa:"IMSA WeatherTech Championship", n_elms:"European Le Mans Series", n_alms:"Asian Le Mans Series", n_lm:"24 Heures du Mans", nextSession:"Prochaine session", endsAround:"Fin vers", then:"puis", yourTimeShort:"ton heure", carSpecs:"Fiche technique", more:"Plus", moreRaces:"Plus de courses", cancel:"Annuler", calHint:"Touche l’icône calendrier à côté d’une session pour l’ajouter — tu pourras alors en sélectionner plusieurs d’un coup. Enregistré à ton heure locale, avec une alerte 15 minutes avant.", selectNone:"Tout désélectionner", pickNone:"Sélectionne les sessions à ajouter", addOneSel:"Ajouter 1 session à mon calendrier", addN:"Ajouter {n} sessions à mon calendrier", subscribe:"S’abonner au calendrier", incomplete:"Horaire incomplet — pas encore publié :", cat_fp:"essais libres", cat_q:"qualifs", cat_r:"course", subTitle:"S’abonner au calendrier de Louis", subIntro:"Choisis ce que tu veux dans ton téléphone. Les week-ends de course sont toujours inclus, et les nouveaux horaires s’ajoutent automatiquement.", sub_all:"Tout", sub_all_d:"Essais libres, qualifs et courses", sub_qr:"Qualifs & courses", sub_qr_d:"Sans les essais libres", sub_r:"Courses seulement", sub_r_d:"Juste les départs des courses", subNote:"Tous les week-ends de course et les horaires, mis à jour automatiquement sur ton téléphone."},
 };
 const MONTHS = {en:["January","February","March","April","May","June","July","August","September","October","November","December"],
                 fr:["Janvier","Février","Mars","Avril","Mai","Juin","Juillet","Août","Septembre","Octobre","Novembre","Décembre"]};
@@ -869,6 +876,17 @@ document.getElementById("list").addEventListener("click", async e => {
 });
 // ouvrir directement sur une course partagée (#race-xxx)
 function focusHash(){ const id = (location.hash||"").slice(1); if (!id.startsWith("race-")) return; const el = document.getElementById(id); if (!el) return; el.scrollIntoView({block:"center"}); el.classList.add("flash"); setTimeout(()=>el.classList.remove("flash"), 2200); }
+
+// ===== Progression de la saison =====
+function seasonProgress(){
+  const now = NOW(), total = EVENTS.length, done = EVENTS.filter(e => evDone(e, now)).length;
+  const el = document.getElementById("season-prog"); if (!el) return;
+  const cur = Math.min(total, done + 1), pct = Math.round(done / total * 100);
+  const label = done >= total ? T("seasonDone") : `${T("raceWord")} ${cur}<span>/${total}</span>`;
+  const k = LANG + done; if (el.dataset.k === k) return; el.dataset.k = k;
+  el.innerHTML = `<b>${label}</b><i style="--p:${pct}%" aria-hidden="true"></i>`;
+  el.setAttribute("aria-label", `${done} / ${total}`);
+}
 // Where to watch
 const WATCH = {alms:"https://www.youtube.com/@AsianLeMansSeries", imsa:"https://www.youtube.com/IMSAOfficial", elms:"https://plus.fiawec.com/en", lm:"https://plus.fiawec.com/en"};
 const watchBtn = ev => `<div class="cd-btns"><button class="watch ghost cd-tt" data-i="${EVENTS.indexOf(ev)}">${TTICON}${T("schedule")}</button><a class="watch" href="${WATCH[ev.series]}" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M7 4.5v15l13-7.5z"/></svg>${T("watch")}</a></div>`;
@@ -953,7 +971,7 @@ function applyLang(lang){
   document.querySelectorAll("[data-i18n-aria]").forEach(el => { el.setAttribute("aria-label", T(el.dataset.i18nAria)); if (el.hasAttribute("title")) el.title = T(el.dataset.i18nAria); });
   document.querySelectorAll("[data-i18n-alt]").forEach(el => el.alt = T(el.dataset.i18nAlt));
   document.querySelectorAll(".lang button").forEach(b => b.setAttribute("aria-pressed", b.dataset.lang===lang ? "true" : "false"));
-  render(); ffSync(); cdKey = null; tick();
+  render(); ffSync(); cdKey = null; tick(); seasonProgress();
   if (ttOpenIdx === "sub") fillSub(); else if (typeof ttOpenIdx === "string" && ttOpenIdx.startsWith("car:")) fillCar(ttOpenIdx.slice(4)); else if (ttOpenIdx !== null) fillTT(ttOpenIdx);
   if (ttOpenIdx !== null) requestAnimationFrame(updateCue);
 }
@@ -962,7 +980,7 @@ document.querySelectorAll(".lang button").forEach(b => b.addEventListener("click
   applyLang(b.dataset.lang);
 }));
 applyLang(LANG);
-setInterval(tick, 1000);
+setInterval(tick, 1000); setInterval(seasonProgress, 60000);
 setTimeout(focusHash, 300); window.addEventListener("hashchange", focusHash);
 // Indice « More races » : visible à l'ouverture, s'estompe en défilant
 function pageCue(){
