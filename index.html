@@ -372,15 +372,16 @@
   .ev.ev2 .ev-logo{margin-top:10px;width:64px;height:18px;object-fit:contain;object-position:left center;opacity:.75}
   .ev.ev2 .ev-logo.sq{height:24px}
   .ev.ev2 .ev-main{min-width:0;display:flex;flex-direction:column;gap:6px}
-  .ev.ev2 .ev-head{display:flex;flex-wrap:wrap;align-items:center;column-gap:10px;row-gap:3px;padding-right:34px;position:relative}
+  .ev.ev2 .ev-head{display:flex;flex-wrap:wrap;align-items:center;column-gap:10px;row-gap:3px;padding-right:22px}
   .ev.ev2 .ev-name{margin:0;font:700 22px/1.1 'Barlow Condensed';letter-spacing:.02em;text-transform:uppercase}
   .ev.ev2.lm .ev-name{color:var(--lm)}
   .ev.ev2 .ev-meta{display:inline-flex;align-items:center;gap:8px;flex:none;height:20px}
   .ev.ev2 .ev-dur{display:inline-flex;align-items:center;gap:4px;font:600 12.5px/1 'Barlow',sans-serif;color:var(--muted)}
   .ev.ev2 .ev-dur svg{width:12px;height:12px}
   .ev.ev2 .ev-next{display:inline-flex;align-items:center;height:18px;font:700 10.5px/1 'Barlow',sans-serif;letter-spacing:.12em;text-transform:uppercase;background:var(--text);color:var(--bg);border-radius:4px;padding:0 6px}
-  .ev.ev2 .share-btn{position:absolute;top:50%;right:0;transform:translateY(-50%);width:28px;height:28px}
-  .ev.ev2 .ev-head:has(.ev-meta:nth-child(2)) .share-btn{top:11px}
+  .ev.ev2 .share-btn{position:absolute;top:6px;right:6px;transform:none;width:30px;height:30px;border-radius:8px;color:var(--dim);opacity:.6;transition:opacity .15s,color .15s,background .15s}
+  .ev.ev2 .share-btn:hover,.ev.ev2 .share-btn:focus-visible{opacity:1;color:var(--text);background:rgba(255,255,255,.05)}
+  .ev.ev2 .share-btn svg{width:14px;height:14px}
   .ev.ev2 .where{margin:0;font-size:13.5px;line-height:1.35;display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
   .ev.ev2 .ev-actions{display:flex;align-items:center;gap:8px;height:28px}
   .ev.ev2 .country{display:inline-flex;align-items:center;gap:6px;height:28px;margin:0 4px 0 0;font:600 14px/1 'Barlow',sans-serif;color:var(--text);white-space:nowrap;min-width:0;overflow:hidden;text-overflow:ellipsis}
@@ -924,7 +925,7 @@ document.addEventListener("click", e => {
 });
 
 // ===== Partager une course =====
-const SHAREICON = '<svg viewBox="0 0 24 24" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12M7.5 7.5 12 3l4.5 4.5"/><path d="M5 12v6.5A2.5 2.5 0 0 0 7.5 21h9a2.5 2.5 0 0 0 2.5-2.5V12"/></g></svg>';
+const SHAREICON = '<svg viewBox="0 0 24 24" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3.5v11M8 7.5l4-4 4 4"/><path d="M6 11.5v7a1.5 1.5 0 0 0 1.5 1.5h9a1.5 1.5 0 0 0 1.5-1.5v-7"/></g></svg>';
 const PAGE_URL = "https://birel22.github.io/louis-calendar/";
 function toast(msg){ let t=document.getElementById("toast"); if(!t){ t=document.createElement("div"); t.id="toast"; t.setAttribute("role","status"); document.body.appendChild(t); } t.textContent=msg; t.classList.add("on"); clearTimeout(t._h); t._h=setTimeout(()=>t.classList.remove("on"),2200); }
 document.getElementById("list").addEventListener("click", async e => {
