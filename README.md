@@ -1,4 +1,4 @@
-# Louis Delétraz – Calendar 2027
+# Louis Race Hub – Louis Delétraz 2027
 
 Calendar files (.ics) for Louis Delétraz's 2027 race season.
 
