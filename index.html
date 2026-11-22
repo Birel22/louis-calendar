@@ -109,7 +109,7 @@
   .team-num{font:800 28px 'Barlow Condensed';line-height:1;color:var(--text);min-width:52px;text-align:center}
   .team-box b{display:block;font:600 15px 'Barlow',sans-serif}
   .team-box span:not(.team-num){display:block;font-size:13px;color:var(--muted);margin-top:2px;line-height:1.35}
-  .page-cue{position:fixed;left:50%;bottom:calc(14px + env(safe-area-inset-bottom));transform:translateX(-50%) translateY(calc((1 - var(--pc,1)) * 12px));opacity:var(--pc,1);display:flex;align-items:center;gap:6px;font:600 13px 'Barlow',sans-serif;color:var(--text);background:rgba(28,31,37,.9);border:1px solid #3a3d45;border-radius:999px;padding:7px 14px 7px 11px;pointer-events:none;z-index:40;backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);box-shadow:0 6px 20px rgba(0,0,0,.4);transition:opacity .12s linear,transform .12s linear}
+  .page-cue{position:fixed;left:50%;bottom:calc(6px + env(safe-area-inset-bottom));transform:translateX(-50%) translateY(calc((1 - var(--pc,1)) * 12px));opacity:var(--pc,1);display:flex;align-items:center;gap:6px;font:600 13px 'Barlow',sans-serif;color:var(--text);background:rgba(28,31,37,.9);border:1px solid #3a3d45;border-radius:999px;padding:7px 14px 7px 11px;pointer-events:none;z-index:40;backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);box-shadow:0 6px 20px rgba(0,0,0,.4);transition:opacity .12s linear,transform .12s linear}
   .page-cue svg{width:14px;height:14px;animation:cue-bob 1.6s ease-in-out infinite}
   .page-cue.gone{display:none}
   .chip-lm{height:14px;width:auto;display:block}
@@ -1032,7 +1032,7 @@ function applyLang(lang){
   document.querySelectorAll("[data-i18n-aria]").forEach(el => { el.setAttribute("aria-label", T(el.dataset.i18nAria)); if (el.hasAttribute("title")) el.title = T(el.dataset.i18nAria); });
   document.querySelectorAll("[data-i18n-alt]").forEach(el => el.alt = T(el.dataset.i18nAlt));
   document.querySelectorAll(".lang button").forEach(b => b.setAttribute("aria-pressed", b.dataset.lang===lang ? "true" : "false"));
-  render(); ffSync(); cdKey = null; tick(); seasonProgress();
+  render(); ffSync(); cdKey = null; tick(); seasonProgress(); if (document.getElementById("page-cue")) fitHero(true);
   if (ttOpenIdx === "sub") fillSub(); else if (typeof ttOpenIdx === "string" && ttOpenIdx.startsWith("car:")) fillCar(ttOpenIdx.slice(4)); else if (ttOpenIdx !== null) fillTT(ttOpenIdx);
   if (ttOpenIdx !== null) requestAnimationFrame(updateCue);
 }
@@ -1051,6 +1051,25 @@ function pageCue(){
   if (!scrollable || listTop < window.innerHeight * 0.55) { cue.style.setProperty("--pc", 0); }
   else { const k = Math.max(0, Math.min(1, 1 - window.scrollY / 140)); cue.style.setProperty("--pc", k.toFixed(3)); }
 }
+// Ajuste la hauteur de la photo pour que la prochaine course tienne pile au-dessus de l'indice « More races »
+var fitW = 0;
+function fitHero(force){
+  const hero = document.querySelector(".hero"), cd = document.getElementById("cd"), cue = document.getElementById("page-cue");
+  if (!hero || !cd) return;
+  if (!force && window.innerWidth === fitW) return; // pas de saut quand la barre Safari bouge
+  fitW = window.innerWidth;
+  if (window.innerWidth > 620) { hero.style.minHeight = ""; return; }
+  const below = cd.getBoundingClientRect().bottom - hero.getBoundingClientRect().bottom;
+  const top = hero.getBoundingClientRect().top + window.scrollY;
+  const cueSpace = (cue.offsetHeight || 32) + 6 + 12;
+  const h = Math.round(Math.max(200, Math.min(560, window.innerHeight - top - below - cueSpace)));
+  hero.style.minHeight = h + "px";
+  pageCue();
+}
+window.addEventListener("resize", () => fitHero(false));
+window.addEventListener("load", () => fitHero(true));
+if (document.fonts) document.fonts.ready.then(() => fitHero(true));
+fitHero(true);
 window.addEventListener("scroll", pageCue, {passive:true});
 window.addEventListener("resize", pageCue);
 pageCue();
