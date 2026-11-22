@@ -934,7 +934,7 @@ document.getElementById("list").addEventListener("click", async e => {
   const ev = EVENTS[+b.dataset.i], dl = dateLabel(ev);
   const text = shareMsg(ev, dl);
   const url = PAGE_URL + "#race-" + ev.id;
-  if (navigator.share){ try { await navigator.share({title:"Louis Race Hub", text, url}); } catch(err){} return; }
+  if (navigator.share){ try { await navigator.share({title:"Louis Race Hub", text: text + "\n" + url}); } catch(err){} return; }
   try { await navigator.clipboard.writeText(text + "\n" + url); toast(T("copied")); } catch(err){ toast(url); }
 });
 // Message de partage (WhatsApp etc.) : infos clés + horaire en heure du circuit
